@@ -1,0 +1,6 @@
+{
+  "name": "Hotel Competitor Intelligence Platform",
+  "description": "AI-powered competitor monitoring platform for hotel booking businesses to track pricing, keywords, website changes, social activity, and ad campaigns with automated insights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
