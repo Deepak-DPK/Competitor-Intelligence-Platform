@@ -6,15 +6,26 @@ export function cn(...inputs: ClassValue[]): string {
 
 export function formatCurrency(amount: number, currency: string = 'INR'): string {
   try {
-    const validCurrency = currency && typeof currency === 'string' ? currency : 'INR';
+    const validCurrency = currency && typeof currency === 'string' ? currency.toUpperCase() : 'INR';
     const validAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
-    return new Intl.NumberFormat('en-IN', {
+    const localeMap: Record<string, string> = {
+      INR: 'en-IN',
+      USD: 'en-US',
+      EUR: 'en-IE',
+      GBP: 'en-GB',
+      AED: 'en-AE',
+      AUD: 'en-AU',
+      SGD: 'en-SG',
+      JPY: 'ja-JP',
+    };
+    const locale = localeMap[validCurrency] || 'en-US';
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: validCurrency,
       maximumFractionDigits: 0,
     }).format(validAmount);
   } catch (e) {
-    return `₹${amount || 0}`;
+    return `${currency || '₹'} ${amount || 0}`;
   }
 }
 
