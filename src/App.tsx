@@ -151,28 +151,28 @@ function AppContent() {
     try {
       const [comps, snaps, pTrends, pDisparities, kws, posts, adCamps, ins, alts, reps] =
         await Promise.all([
-          apiService.getCompetitors(projectId),
-          apiService.getWebsiteSnapshots(),
-          apiService.getPricingTrends(),
-          apiService.getPricingDisparities(),
-          apiService.getKeywordRanks(),
-          apiService.getSocialPosts(),
-          apiService.getAdCampaigns(),
-          apiService.getAIInsights(projectId),
-          apiService.getAlerts(projectId),
-          apiService.getReports(projectId),
+          apiService.getCompetitors(projectId).catch(() => []),
+          apiService.getWebsiteSnapshots().catch(() => []),
+          apiService.getPricingTrends().catch(() => []),
+          apiService.getPricingDisparities().catch(() => []),
+          apiService.getKeywordRanks().catch(() => []),
+          apiService.getSocialPosts().catch(() => []),
+          apiService.getAdCampaigns().catch(() => []),
+          apiService.getAIInsights(projectId).catch(() => []),
+          apiService.getAlerts(projectId).catch(() => []),
+          apiService.getReports(projectId).catch(() => []),
         ]);
 
-      setCompetitors(comps);
-      setSnapshots(snaps);
-      setPricingTrends(pTrends);
-      setDisparities(pDisparities);
-      setKeywords(kws);
-      setSocialPosts(posts);
-      setAds(adCamps);
-      setInsights(ins);
-      setAlerts(alts);
-      setReports(reps);
+      setCompetitors(comps || []);
+      setSnapshots(snaps || []);
+      setPricingTrends(pTrends || []);
+      setDisparities(pDisparities || []);
+      setKeywords(kws || []);
+      setSocialPosts(posts || []);
+      setAds(adCamps || []);
+      setInsights(ins || []);
+      setAlerts(alts || []);
+      setReports(reps || []);
     } catch (e) {
       console.error('Error fetching project data', e);
     }
@@ -415,7 +415,7 @@ function AppContent() {
             />
           ) : (
             <>
-              {currentNav === 'dashboard' && (
+              {currentNav === 'dashboard' && activeProject && (
                 <DashboardView
                   project={activeProject}
                   competitors={competitors}
