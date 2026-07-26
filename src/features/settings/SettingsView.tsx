@@ -30,7 +30,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [settings, setSettings] = useState({
     scanFrequency: project.scanFrequency,
     concurrency: '4 Nodes',
-    jinaReaderDepth: 'Deep Markdown & DOM Diff',
+    firecrawlDepth: 'Real-Time Markdown & HTML Diff',
     proxyRotation: true,
     slackWebhook: 'https://hooks.slack.com/services/T00/B00/XXXX',
     emailAlerts: true,

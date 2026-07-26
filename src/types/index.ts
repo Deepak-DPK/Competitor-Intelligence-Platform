@@ -200,8 +200,8 @@ export interface ReportConfig {
 export interface SystemStatus {
   lastGlobalScan: string;
   activeProxies: number;
-  playwrightQueueStatus: 'Idle' | 'Processing' | 'Completed';
-  jinaReaderLatencyMs: number;
-  geminiModel: string;
+  firecrawlQueueStatus: 'Idle' | 'Processing' | 'Completed';
+  firecrawlLatencyMs: number;
+  aiEngineModel: string;
   totalSnapshotsToday: number;
 }

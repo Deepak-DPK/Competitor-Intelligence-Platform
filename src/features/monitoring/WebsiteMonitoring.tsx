@@ -169,7 +169,7 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
               <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/60">
                 <h4 className="text-xs font-bold text-slate-900 mb-1 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                  Jina Reader Change Summary
+                  Firecrawl Extraction Summary
                 </h4>
                 <p className="text-xs text-slate-600 leading-relaxed">{selectedSnapshot.summary}</p>
               </div>
