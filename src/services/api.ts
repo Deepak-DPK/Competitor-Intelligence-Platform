@@ -99,7 +99,14 @@ class ApiService {
   }
 
   async getUser(): Promise<User> {
-    return fetchWithAuth('/auth/me');
+    const raw = await fetchWithAuth('/auth/me');
+    return {
+      id: raw.id,
+      name: raw.full_name || raw.name || raw.email?.split('@')[0] || 'User',
+      email: raw.email,
+      role: raw.role || 'Revenue Manager',
+      avatar: raw.avatar_url || raw.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+    };
   }
 
   async updateUserRole(role: UserRole): Promise<User> {

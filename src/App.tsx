@@ -72,12 +72,37 @@ function AppContent() {
     if (!isAuthenticated) return;
     try {
       setIsLoading(true);
-      const [usr, projs, status] = await Promise.all([
-        apiService.getUser(),
-        apiService.getProjects(),
-        apiService.getSystemStatus(),
-      ]);
 
+      // 1. Fetch user profile
+      let usr: User;
+      try {
+        usr = await apiService.getUser();
+      } catch (err: any) {
+        console.error('Failed to fetch user', err);
+        setIsAuthenticated(false);
+        localStorage.removeItem('auth_token');
+        return;
+      }
+      setUser(usr);
+
+      // 2. Fetch projects safely
+      let projs: Project[] = [];
+      try {
+        projs = await apiService.getProjects();
+      } catch (err) {
+        console.warn('Failed to fetch projects', err);
+      }
+
+      // 3. Fetch system status safely
+      let status: SystemStatus | null = null;
+      try {
+        status = await apiService.getSystemStatus();
+      } catch (err) {
+        console.warn('Failed to fetch system status', err);
+      }
+      setSystemStatus(status);
+
+      // 4. Ensure at least one project exists
       let currentProjects = projs;
       if (currentProjects.length === 0) {
         try {
@@ -91,13 +116,23 @@ function AppContent() {
           });
           currentProjects = [defaultProj];
         } catch (err) {
-          console.warn('Could not auto-create default project', err);
+          console.warn('Could not auto-create default project, creating local fallback', err);
+          currentProjects = [{
+            id: 'fallback-proj-1',
+            name: 'Grand Luxury Resort & Spa',
+            description: 'Primary competitive intelligence workspace',
+            location: 'Miami, FL',
+            currency: 'USD',
+            competitorCount: 0,
+            lastScanAt: new Date().toISOString(),
+            scanFrequency: 'Daily',
+            status: 'Active',
+            createdAt: new Date().toISOString(),
+          }];
         }
       }
 
-      setUser(usr);
       setProjects(currentProjects);
-      setSystemStatus(status);
 
       if (currentProjects.length > 0) {
         const defaultProj = currentProjects[0];
@@ -106,12 +141,7 @@ function AppContent() {
       }
     } catch (e: any) {
       console.error('Error initializing app', e);
-      if (e.message?.includes('401')) {
-        setIsAuthenticated(false);
-        localStorage.removeItem('auth_token');
-      } else {
-        showToast('error', 'Initialization Failed', 'Could not load platform data.');
-      }
+      showToast('error', 'Initialization Failed', 'Could not load platform data.');
     } finally {
       setIsLoading(false);
     }
