@@ -80,31 +80,78 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
       let pendingSuggestions = await apiService.getPendingSuggestions(projectId).catch(() => null);
       
       if (!pendingSuggestions || pendingSuggestions.length === 0) {
-        // Fallback mock suggestions
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        pendingSuggestions = [
-          {
-            id: `sug-${Date.now()}-1`,
-            name: 'The Leela Palaces',
-            domain: 'theleela.com',
-            reason: 'Direct luxury segment competitor in the Indian market with similar target audience.',
-            confidence_score: 0.95
-          },
-          {
-            id: `sug-${Date.now()}-2`,
-            name: 'ITC Hotels',
-            domain: 'itchotels.com',
-            reason: 'Matches premium positioning and offers comparable luxury amenities.',
-            confidence_score: 0.88
-          },
-          {
-            id: `sug-${Date.now()}-3`,
-            name: 'Oberoi Hotels',
-            domain: 'oberoihotels.com',
-            reason: 'Key luxury player competing for high-net-worth travelers.',
-            confidence_score: 0.92
-          }
-        ];
+        // Dynamic fallback suggestions based on domain/industry keywords
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        const lowerDomain = (domain || profile?.website || '').toLowerCase();
+        const isTravelAgency = lowerDomain.includes('trip') || lowerDomain.includes('booking') || lowerDomain.includes('expedia') || lowerDomain.includes('agoda') || lowerDomain.includes('travel') || lowerDomain.includes('makemytrip') || lowerDomain.includes('goibibo');
+        const isAirline = lowerDomain.includes('air') || lowerDomain.includes('flight') || lowerDomain.includes('indigo') || lowerDomain.includes('vistara');
+
+        if (isTravelAgency) {
+          pendingSuggestions = [
+            {
+              id: `sug-${Date.now()}-1`,
+              name: 'MakeMyTrip India',
+              domain: 'makemytrip.com',
+              reason: 'Dominant Indian OTA competing on hotel room rates, holiday packages, and seasonal discount codes.',
+              confidence_score: 0.96
+            },
+            {
+              id: `sug-${Date.now()}-2`,
+              name: 'Booking.com',
+              domain: 'booking.com',
+              reason: 'Global OTA market leader with aggressive Genius loyalty discounts and mobile-only rates.',
+              confidence_score: 0.94
+            },
+            {
+              id: `sug-${Date.now()}-3`,
+              name: 'Agoda India',
+              domain: 'agoda.com',
+              reason: 'Key online travel agency competing for price-sensitive Asian travelers with flash sale pricing.',
+              confidence_score: 0.91
+            }
+          ];
+        } else if (isAirline) {
+          pendingSuggestions = [
+            {
+              id: `sug-${Date.now()}-1`,
+              name: 'IndiGo Airlines',
+              domain: 'goindigo.in',
+              reason: 'Primary low-cost carrier competing on route frequency and dynamic fare pricing.',
+              confidence_score: 0.97
+            },
+            {
+              id: `sug-${Date.now()}-2`,
+              name: 'Air India',
+              domain: 'airindia.com',
+              reason: 'Full-service national carrier competing across domestic metro routes and international sectors.',
+              confidence_score: 0.93
+            }
+          ];
+        } else {
+          pendingSuggestions = [
+            {
+              id: `sug-${Date.now()}-1`,
+              name: 'The Leela Palaces',
+              domain: 'theleela.com',
+              reason: 'Direct luxury segment competitor in the Indian market with similar target audience.',
+              confidence_score: 0.95
+            },
+            {
+              id: `sug-${Date.now()}-2`,
+              name: 'ITC Hotels',
+              domain: 'itchotels.com',
+              reason: 'Matches premium positioning and offers comparable luxury amenities.',
+              confidence_score: 0.88
+            },
+            {
+              id: `sug-${Date.now()}-3`,
+              name: 'Oberoi Hotels',
+              domain: 'oberoihotels.com',
+              reason: 'Key luxury player competing for high-net-worth travelers.',
+              confidence_score: 0.92
+            }
+          ];
+        }
       }
       
       setSuggestions(pendingSuggestions);
