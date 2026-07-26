@@ -19,21 +19,26 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccess }) => {
     full_name: '',
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    const form = e.currentTarget;
+    const emailVal = (form.querySelector('input[type="email"]') as HTMLInputElement)?.value || formData.email;
+    const passwordVal = (form.querySelector('input[type="password"]') as HTMLInputElement)?.value || formData.password;
+    const fullNameVal = (form.querySelector('input[type="text"]') as HTMLInputElement)?.value || formData.full_name;
+
     try {
       if (isLogin) {
         await apiService.login({
-          email: formData.email,
-          password: formData.password,
+          email: emailVal,
+          password: passwordVal,
         });
         showToast('success', 'Welcome back', 'Successfully logged in.');
       } else {
         await apiService.register({
-          email: formData.email,
-          password: formData.password,
-          full_name: formData.full_name,
+          email: emailVal,
+          password: passwordVal,
+          full_name: fullNameVal,
         });
         showToast('success', 'Account created', 'Successfully registered and logged in.');
       }
