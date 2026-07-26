@@ -78,12 +78,29 @@ function AppContent() {
         apiService.getSystemStatus(),
       ]);
 
+      let currentProjects = projs;
+      if (currentProjects.length === 0) {
+        try {
+          const defaultProj = await apiService.createProject({
+            name: 'Grand Luxury Resort & Spa',
+            description: 'Primary competitive intelligence workspace',
+            location: 'Miami, FL',
+            currency: 'USD',
+            scanFrequency: 'Daily',
+            status: 'Active',
+          });
+          currentProjects = [defaultProj];
+        } catch (err) {
+          console.warn('Could not auto-create default project', err);
+        }
+      }
+
       setUser(usr);
-      setProjects(projs);
+      setProjects(currentProjects);
       setSystemStatus(status);
 
-      if (projs.length > 0) {
-        const defaultProj = projs[0];
+      if (currentProjects.length > 0) {
+        const defaultProj = currentProjects[0];
         setActiveProject(defaultProj);
         await loadProjectData(defaultProj.id);
       }
@@ -300,7 +317,7 @@ function AppContent() {
     return <LoginView onSuccess={() => setIsAuthenticated(true)} />;
   }
 
-  if (isLoading || !user || !activeProject) {
+  if (isLoading || !user) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
         <div className="max-w-md w-full space-y-4 text-center">
