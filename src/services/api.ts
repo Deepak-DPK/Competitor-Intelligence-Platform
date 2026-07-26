@@ -35,14 +35,13 @@ async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
 }
 
 class ApiService {
-  // User Authentication / Profile
   async getUser(): Promise<User> {
-    return fetchWithAuth('/users/me');
+    return fetchWithAuth('/auth/me');
   }
 
   async updateUserRole(role: UserRole): Promise<User> {
-    return fetchWithAuth('/users/me/role', {
-      method: 'PUT',
+    return fetchWithAuth('/auth/me', {
+      method: 'PATCH',
       body: JSON.stringify({ role }),
     });
   }
@@ -223,7 +222,7 @@ class ApiService {
 
   // System Status
   async getSystemStatus(): Promise<SystemStatus> {
-    return fetchWithAuth('/health/status');
+    return fetchWithAuth('/health');
   }
 
   async triggerGlobalScan(projectId: string): Promise<{ count: number; scannedAt: string }> {
