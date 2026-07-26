@@ -115,6 +115,11 @@ export const LoginView: React.FC<LoginViewProps> = ({ onSuccess }) => {
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               />
             </div>
+            {!isLogin && (
+              <p className="text-[11px] text-slate-400 ml-1">
+                Must be at least 8 characters long and contain both letters and numbers.
+              </p>
+            )}
           </div>
 
           <Button

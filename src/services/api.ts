@@ -44,10 +44,20 @@ class ApiService {
       body: JSON.stringify(credentials),
     });
     if (!response.ok) {
-      throw new Error(`Login Error: ${response.status} ${response.statusText}`);
+      let msg = `Login Error: ${response.status} ${response.statusText}`;
+      try {
+        const errData = await response.json();
+        if (errData.detail) {
+          msg = typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail);
+        }
+      } catch {}
+      throw new Error(msg);
     }
     const data = await response.json();
-    localStorage.setItem('auth_token', data.access_token);
+    const token = data.tokens?.access_token || data.access_token;
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    }
     return data;
   }
 
@@ -58,10 +68,24 @@ class ApiService {
       body: JSON.stringify(credentials),
     });
     if (!response.ok) {
-      throw new Error(`Register Error: ${response.status} ${response.statusText}`);
+      let msg = `Register Error: ${response.status} ${response.statusText}`;
+      try {
+        const errData = await response.json();
+        if (errData.detail) {
+          if (Array.isArray(errData.detail)) {
+            msg = errData.detail.map((d: any) => d.msg).join(', ');
+          } else if (typeof errData.detail === 'string') {
+            msg = errData.detail;
+          }
+        }
+      } catch {}
+      throw new Error(msg);
     }
     const data = await response.json();
-    localStorage.setItem('auth_token', data.access_token);
+    const token = data.tokens?.access_token || data.access_token;
+    if (token) {
+      localStorage.setItem('auth_token', token);
+    }
     return data;
   }
 
