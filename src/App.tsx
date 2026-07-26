@@ -365,6 +365,20 @@ function AppContent() {
     );
   }
 
+  const fallbackProject: Project = {
+    id: 'default-proj-1',
+    name: 'Grand Luxury Resort & Spa',
+    description: 'Primary competitive intelligence workspace',
+    location: 'Miami, FL',
+    currency: 'USD',
+    competitorCount: competitors.length,
+    lastScanAt: new Date().toISOString(),
+    scanFrequency: 'Daily',
+    status: 'Active',
+    createdAt: new Date().toISOString(),
+  };
+
+  const effectiveProject = activeProject || projects[0] || fallbackProject;
   const unreadAlertsCount = alerts.filter((a) => !a.isRead).length;
 
   return (
@@ -373,7 +387,7 @@ function AppContent() {
       <Navbar
         user={user}
         projects={projects}
-        activeProject={activeProject}
+        activeProject={effectiveProject}
         onSelectProject={handleSelectProject}
         alerts={alerts}
         onOpenAlerts={() => setCurrentNav('alerts')}
@@ -404,7 +418,7 @@ function AppContent() {
           {selectedCompetitorDetail ? (
             <CompetitorDetailView
               competitor={selectedCompetitorDetail}
-              project={activeProject}
+              project={effectiveProject}
               snapshots={snapshots}
               keywords={keywords}
               ads={ads}
@@ -415,9 +429,9 @@ function AppContent() {
             />
           ) : (
             <>
-              {currentNav === 'dashboard' && activeProject && (
+              {currentNav === 'dashboard' && (
                 <DashboardView
-                  project={activeProject}
+                  project={effectiveProject}
                   competitors={competitors}
                   snapshots={snapshots}
                   pricingTrends={pricingTrends}
@@ -433,8 +447,8 @@ function AppContent() {
 
               {currentNav === 'projects' && (
                 <ProjectsView
-                  projects={projects}
-                  activeProject={activeProject}
+                  projects={projects.length > 0 ? projects : [effectiveProject]}
+                  activeProject={effectiveProject}
                   onSelectProject={handleSelectProject}
                   onCreateProject={handleCreateProject}
                   onDeleteProject={handleDeleteProject}
@@ -443,7 +457,7 @@ function AppContent() {
 
               {currentNav === 'competitors' && (
                 <CompetitorsView
-                  project={activeProject}
+                  project={effectiveProject}
                   competitors={competitors}
                   onAddCompetitor={handleAddCompetitor}
                   onUpdateCompetitor={handleUpdateCompetitor}
@@ -465,7 +479,7 @@ function AppContent() {
 
               {currentNav === 'pricing' && (
                 <PricingMonitoring
-                  project={activeProject}
+                  project={effectiveProject}
                   pricingTrends={pricingTrends}
                   disparities={disparities}
                   competitors={competitors}
@@ -482,7 +496,7 @@ function AppContent() {
 
               {currentNav === 'insights' && (
                 <AIInsightsView
-                  project={activeProject}
+                  project={effectiveProject}
                   insights={insights}
                   onGenerateInsight={handleGenerateInsight}
                   isGenerating={isGeneratingInsight}
@@ -491,7 +505,7 @@ function AppContent() {
 
               {currentNav === 'reports' && (
                 <ReportsView
-                  project={activeProject}
+                  project={effectiveProject}
                   reports={reports}
                   competitors={competitors}
                   onCreateReport={handleCreateReport}
@@ -500,7 +514,7 @@ function AppContent() {
 
               {currentNav === 'alerts' && (
                 <AlertsView
-                  project={activeProject}
+                  project={effectiveProject}
                   alerts={alerts}
                   onMarkAsRead={handleMarkAlertAsRead}
                   onClearAllAlerts={handleClearAllAlerts}
@@ -509,7 +523,7 @@ function AppContent() {
               )}
 
               {currentNav === 'settings' && (
-                <SettingsView project={activeProject} systemStatus={systemStatus} />
+                <SettingsView project={effectiveProject} systemStatus={systemStatus} />
               )}
             </>
           )}

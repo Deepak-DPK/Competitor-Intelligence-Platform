@@ -5,15 +5,23 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 export function formatCurrency(amount: number, currency: string = 'USD'): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    maximumFractionDigits: 0,
-  }).format(amount);
+  try {
+    const validCurrency = currency && typeof currency === 'string' ? currency : 'USD';
+    const validAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: validCurrency,
+      maximumFractionDigits: 0,
+    }).format(validAmount);
+  } catch (e) {
+    return `$${amount || 0}`;
+  }
 }
 
 export function formatDate(dateString: string): string {
+  if (!dateString) return 'N/A';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'N/A';
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
     day: 'numeric',
@@ -22,7 +30,9 @@ export function formatDate(dateString: string): string {
 }
 
 export function formatDateTime(dateString: string): string {
+  if (!dateString) return 'N/A';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'N/A';
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
     day: 'numeric',
@@ -32,7 +42,9 @@ export function formatDateTime(dateString: string): string {
 }
 
 export function formatTimeAgo(dateString: string): string {
+  if (!dateString) return 'Just now';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'Just now';
   const now = new Date();
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
