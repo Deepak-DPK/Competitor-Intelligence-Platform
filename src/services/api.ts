@@ -13,6 +13,7 @@ import {
   ReportConfig,
   SystemStatus,
   UserRole,
+  AuthResponse,
 } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
@@ -35,6 +36,44 @@ async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
 }
 
 class ApiService {
+  // Auth
+  async login(credentials: Record<string, string>): Promise<AuthResponse> {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    });
+    if (!response.ok) {
+      throw new Error(`Login Error: ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+    localStorage.setItem('auth_token', data.access_token);
+    return data;
+  }
+
+  async register(credentials: Record<string, string>): Promise<AuthResponse> {
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    });
+    if (!response.ok) {
+      throw new Error(`Register Error: ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+    localStorage.setItem('auth_token', data.access_token);
+    return data;
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await fetchWithAuth('/auth/logout', { method: 'POST' });
+    } catch (e) {
+      console.warn('Backend logout failed, clearing local token anyway', e);
+    }
+    localStorage.removeItem('auth_token');
+  }
+
   async getUser(): Promise<User> {
     return fetchWithAuth('/auth/me');
   }

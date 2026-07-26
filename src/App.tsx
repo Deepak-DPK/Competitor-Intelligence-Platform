@@ -35,10 +35,13 @@ import { ReportsView } from './features/reports/ReportsView';
 import { AlertsView } from './features/alerts/AlertsView';
 import { SettingsView } from './features/settings/SettingsView';
 
+import { LoginView } from './features/auth/LoginView';
+
 function AppContent() {
   const { showToast } = useToast();
 
   // App Core State
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem('auth_token'));
   const [user, setUser] = useState<User | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
@@ -66,6 +69,7 @@ function AppContent() {
 
   // Initial Data Fetch
   const loadInitialData = useCallback(async () => {
+    if (!isAuthenticated) return;
     try {
       setIsLoading(true);
       const [usr, projs, status] = await Promise.all([
@@ -83,13 +87,18 @@ function AppContent() {
         setActiveProject(defaultProj);
         await loadProjectData(defaultProj.id);
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error initializing app', e);
-      showToast('error', 'Initialization Failed', 'Could not load platform data.');
+      if (e.message?.includes('401')) {
+        setIsAuthenticated(false);
+        localStorage.removeItem('auth_token');
+      } else {
+        showToast('error', 'Initialization Failed', 'Could not load platform data.');
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [showToast]);
+  }, [isAuthenticated, showToast]);
 
   const loadProjectData = async (projectId: string) => {
     try {
@@ -267,6 +276,30 @@ function AppContent() {
     }
   };
 
+  const handleLogout = async () => {
+    await apiService.logout();
+    setIsAuthenticated(false);
+    setUser(null);
+    setProjects([]);
+    setActiveProject(null);
+    setCompetitors([]);
+    setSnapshots([]);
+    setPricingTrends([]);
+    setDisparities([]);
+    setKeywords([]);
+    setSocialPosts([]);
+    setAds([]);
+    setInsights([]);
+    setAlerts([]);
+    setReports([]);
+    setSystemStatus(null);
+    showToast('info', 'Signed Out', 'You have been signed out.');
+  };
+
+  if (!isAuthenticated) {
+    return <LoginView onSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   if (isLoading || !user || !activeProject) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
@@ -301,6 +334,7 @@ function AppContent() {
         isScanning={isScanning}
         onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
         onChangeUserRole={handleChangeUserRole}
+        onLogout={handleLogout}
       />
 
       {/* Main Container */}

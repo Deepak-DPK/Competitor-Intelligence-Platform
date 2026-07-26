@@ -27,6 +27,7 @@ export interface NavbarProps {
   isScanning: boolean;
   onToggleMobileSidebar: () => void;
   onChangeUserRole: (role: UserRole) => void;
+  onLogout: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -40,6 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isScanning,
   onToggleMobileSidebar,
   onChangeUserRole,
+  onLogout,
 }) => {
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -211,6 +213,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {user.role === r && <Check className="w-3.5 h-3.5 text-slate-900" />}
                   </button>
                 ))}
+
+                <div className="h-px bg-slate-100 my-1 w-full" />
+                <button
+                  onClick={() => {
+                    setIsUserMenuOpen(false);
+                    onLogout();
+                  }}
+                  className="w-full flex items-center justify-start px-3 py-1.5 text-xs rounded-xl text-left cursor-pointer transition-colors text-rose-600 hover:bg-rose-50"
+                >
+                  Sign Out
+                </button>
               </div>
             </>
           )}
