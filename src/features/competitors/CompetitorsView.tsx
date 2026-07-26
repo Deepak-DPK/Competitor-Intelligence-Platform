@@ -14,6 +14,7 @@ import {
   SlidersHorizontal,
   ChevronRight,
   Eye,
+  Sparkles,
 } from 'lucide-react';
 import { Competitor, Project } from '../../types';
 import { Card, CardHeader, CardTitle, CardDescription } from '../../components/ui/Card';
