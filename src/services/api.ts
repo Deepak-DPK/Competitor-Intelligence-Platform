@@ -114,6 +114,41 @@ class ApiService {
     });
   }
 
+  // ------------------------------------------------------------------
+  // AI Competitor Discovery
+  // ------------------------------------------------------------------
+  async analyzeCompany(projectId: string, website: string): Promise<any> {
+    return fetchWithAuth('/company/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ project_id: projectId, website }),
+    });
+  }
+
+  async discoverCompetitors(projectId: string): Promise<any> {
+    return fetchWithAuth('/company/discover', {
+      method: 'POST',
+      body: JSON.stringify({ project_id: projectId }),
+    });
+  }
+
+  async getPendingSuggestions(projectId: string): Promise<any[]> {
+    return fetchWithAuth(`/company/suggestions?project_id=${projectId}`);
+  }
+
+  async approveSuggestion(suggestionId: string, data?: { competitor_name?: string; website?: string }): Promise<any> {
+    return fetchWithAuth(`/company/approve/${suggestionId}`, {
+      method: 'POST',
+      body: JSON.stringify(data || {}),
+    });
+  }
+
+  async rejectSuggestion(suggestionId: string): Promise<any> {
+    return fetchWithAuth(`/company/reject/${suggestionId}`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
+  }
+
   // Monitoring Snapshots
   async getWebsiteSnapshots(competitorId?: string): Promise<WebsiteSnapshot[]> {
     const query = competitorId ? `?competitor_id=${competitorId}` : '';

@@ -23,6 +23,7 @@ import { SearchInput } from '../../components/ui/SearchInput';
 import { Modal } from '../../components/ui/Modal';
 import { useToast } from '../../components/ui/Toast';
 import { formatCurrency, formatTimeAgo } from '../../lib/utils';
+import { AICompetitorDiscoveryModal } from './AICompetitorDiscoveryModal';
 
 export interface CompetitorsViewProps {
   project: Project;
@@ -49,6 +50,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isAIDiscoveryOpen, setIsAIDiscoveryOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -160,14 +162,37 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
             Active hotel competitors in <span className="font-semibold text-slate-800">{project.name}</span>.
           </p>
         </div>
-        <Button
-          variant="primary"
-          onClick={() => setIsAddModalOpen(true)}
-          leftIcon={<Plus className="w-4 h-4" />}
-        >
-          Add Competitor
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button
+            variant="outline"
+            onClick={() => setIsAIDiscoveryOpen(true)}
+            leftIcon={<Sparkles className="w-4 h-4 text-indigo-500" />}
+            className="border-indigo-200 hover:bg-indigo-50 text-indigo-700"
+          >
+            AI Discover
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => setIsAddModalOpen(true)}
+            leftIcon={<Plus className="w-4 h-4" />}
+          >
+            Add Competitor
+          </Button>
+        </div>
       </div>
+
+      <AICompetitorDiscoveryModal 
+        isOpen={isAIDiscoveryOpen}
+        onClose={() => setIsAIDiscoveryOpen(false)}
+        projectId={project.id}
+        onCompetitorsUpdated={() => {
+          // Trigger a re-fetch of competitors by calling a passed prop or reloading
+          // For now, we will just close the modal and let the parent handle the refresh
+          setIsAIDiscoveryOpen(false);
+          // Assuming the parent component re-fetches or we could just force a window reload for now
+          window.location.reload(); 
+        }}
+      />
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
