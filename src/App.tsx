@@ -107,10 +107,10 @@ function AppContent() {
       if (currentProjects.length === 0) {
         try {
           const defaultProj = await apiService.createProject({
-            name: 'Grand Luxury Resort & Spa',
+            name: 'Taj Exotica Resort & Spa Goa',
             description: 'Primary competitive intelligence workspace',
-            location: 'Miami, FL',
-            currency: 'USD',
+            location: 'Goa, India',
+            currency: 'INR',
             scanFrequency: 'Daily',
             status: 'Active',
           });
@@ -119,10 +119,10 @@ function AppContent() {
           console.warn('Could not auto-create default project, creating local fallback', err);
           currentProjects = [{
             id: 'fallback-proj-1',
-            name: 'Grand Luxury Resort & Spa',
+            name: 'Taj Exotica Resort & Spa Goa',
             description: 'Primary competitive intelligence workspace',
-            location: 'Miami, FL',
-            currency: 'USD',
+            location: 'Goa, India',
+            currency: 'INR',
             competitorCount: 0,
             lastScanAt: new Date().toISOString(),
             scanFrequency: 'Daily',
@@ -252,7 +252,7 @@ function AppContent() {
   const handleTriggerScan = async (comp: Competitor) => {
     try {
       setIsScanning(true);
-      showToast('info', 'Playwright Crawling', `Scraping target URL for ${comp.name}...`);
+      showToast('info', 'Firecrawl Scraper', `Extracting live data for ${comp.name}...`);
       const res = await apiService.triggerScan(comp.id);
       if (activeProject) {
         await loadProjectData(activeProject.id);
@@ -270,7 +270,7 @@ function AppContent() {
     if (!activeProject) return;
     try {
       setIsScanning(true);
-      showToast('info', 'Global Scan Initiated', `Running Playwright & Jina Reader across ${activeProject.name}...`);
+      showToast('info', 'Global Scan Initiated', `Running Firecrawl Real-Time Scraper across ${activeProject.name}...`);
       await apiService.triggerGlobalScan(activeProject.id);
       await loadProjectData(activeProject.id);
       showToast('success', 'Global Scan Complete', 'Refreshed all competitor rates, keywords, and DOM snapshots.');
@@ -286,7 +286,7 @@ function AppContent() {
     if (!activeProject) return;
     try {
       setIsGeneratingInsight(true);
-      showToast('info', 'Gemini AI Processing', 'Synthesizing competitive intelligence report...');
+      showToast('info', 'Apex AI Processing', 'Synthesizing competitive intelligence report...');
       await apiService.generateAIInsight(activeProject.id, promptQuery);
       const updatedIns = await apiService.getAIInsights(activeProject.id);
       setInsights(updatedIns);
@@ -355,7 +355,7 @@ function AppContent() {
             <span className="font-bold text-lg text-indigo-400">R</span>
           </div>
           <h2 className="text-base font-bold text-slate-900">Initializing ResortIQ Intelligence Platform...</h2>
-          <p className="text-xs text-slate-500">Connecting Playwright scraper nodes & Gemini AI engines</p>
+          <p className="text-xs text-slate-500">Connecting Firecrawl Scraper Nodes & Apex AI Engines</p>
           <div className="space-y-2 pt-4">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-3/4 mx-auto" />
@@ -367,10 +367,10 @@ function AppContent() {
 
   const fallbackProject: Project = {
     id: 'default-proj-1',
-    name: 'Grand Luxury Resort & Spa',
+    name: 'Taj Exotica Resort & Spa Goa',
     description: 'Primary competitive intelligence workspace',
-    location: 'Miami, FL',
-    currency: 'USD',
+    location: 'Goa, India',
+    currency: 'INR',
     competitorCount: competitors.length,
     lastScanAt: new Date().toISOString(),
     scanFrequency: 'Daily',

@@ -186,8 +186,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
           <div className="mt-3 flex items-baseline space-x-2">
             <span className="text-2xl font-bold text-slate-900">{snapshots.length}</span>
+          <div className="mt-3 flex items-baseline space-x-2">
+            <span className="text-2xl font-bold text-slate-900">{snapshots.length}</span>
             <Badge variant="purple" size="sm">
-              Playwright DOM Diff
+              Firecrawl HTML Diff
             </Badge>
           </div>
           <div className="mt-2 text-[11px] text-slate-500 flex items-center justify-between">
@@ -260,11 +262,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="flex items-center justify-center space-x-6 pt-3 mt-2 border-t border-slate-100 text-xs font-medium text-slate-600">
             <div className="flex items-center space-x-2">
               <span className="w-3 h-3 rounded-full bg-slate-900" />
-              <span>Our Direct Rate ($430)</span>
+              <span>Our Direct Rate (₹35,000)</span>
             </div>
             <div className="flex items-center space-x-2">
               <span className="w-3 h-3 rounded-full bg-blue-500" />
-              <span>Booking.com ($355 - Undercutting)</span>
+              <span>Booking.com (₹29,000 - Undercutting)</span>
             </div>
           </div>
         </Card>
@@ -275,7 +277,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <CardHeader>
               <div>
                 <CardTitle>Recent Detected Changes</CardTitle>
-                <CardDescription>Playwright HTML diffs & price updates</CardDescription>
+                <CardDescription>Firecrawl HTML diffs & rate updates</CardDescription>
               </div>
               <Button variant="ghost" size="sm" onClick={() => onNavigate('alerts')}>
                 All ({alerts.length})

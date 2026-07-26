@@ -4,17 +4,17 @@ export function cn(...inputs: ClassValue[]): string {
   return inputs.filter(Boolean).join(' ');
 }
 
-export function formatCurrency(amount: number, currency: string = 'USD'): string {
+export function formatCurrency(amount: number, currency: string = 'INR'): string {
   try {
-    const validCurrency = currency && typeof currency === 'string' ? currency : 'USD';
+    const validCurrency = currency && typeof currency === 'string' ? currency : 'INR';
     const validAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: validCurrency,
       maximumFractionDigits: 0,
     }).format(validAmount);
   } catch (e) {
-    return `$${amount || 0}`;
+    return `₹${amount || 0}`;
   }
 }
 

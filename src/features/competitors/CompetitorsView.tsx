@@ -367,7 +367,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         title="Add Monitored Competitor"
-        description="Specify target hotel or OTA URL for Playwright & Jina Reader scrapers."
+        description="Specify target hotel or OTA URL for Firecrawl real-time scrapers."
       >
         <form onSubmit={handleAddSubmit} className="space-y-4">
           <div>
@@ -377,7 +377,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
             <input
               type="text"
               required
-              placeholder="e.g. Hyatt Regency Downtown"
+              placeholder="e.g. Taj Fort Aguada Resort & Spa"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"

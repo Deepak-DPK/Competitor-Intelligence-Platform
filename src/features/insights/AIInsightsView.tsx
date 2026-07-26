@@ -40,7 +40,7 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
 
     try {
       await onGenerateInsight(customPrompt);
-      showToast('success', 'Gemini AI Strategy Generated', 'Created new competitive analysis report.');
+      showToast('success', 'Apex AI Strategy Generated', 'Created new competitive analysis report.');
       setCustomPrompt('');
     } catch (err) {
       showToast('error', 'AI Generation Failed', 'Could not run strategic analysis.');
@@ -59,7 +59,7 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
         <div>
           <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-indigo-600" />
-            <span>Gemini AI Competitive Strategy Engine</span>
+            <span>Apex AI Competitive Strategy Engine</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
             Automated threat detection, revenue optimization recommendations, and strategic action plans.
@@ -85,7 +85,7 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
               type="text"
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
-              placeholder="Ask Gemini AI (e.g. 'Analyze competitor discount strategies for Q3' or 'Suggest counter-offers for Booking.com rate undercut')..."
+              placeholder="Ask Apex AI (e.g. 'Analyze competitor discount strategies for Q3' or 'Suggest counter-offers for rate undercut')..."
               className="w-full h-10 pl-10 pr-4 bg-slate-800/80 text-xs text-white placeholder:text-slate-400 rounded-xl border border-slate-700 focus:outline-none focus:border-indigo-400 transition-all"
             />
           </div>

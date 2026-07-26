@@ -51,7 +51,7 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
         <div>
           <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Globe className="w-5 h-5 text-indigo-600" />
-            <span>Playwright + Jina Reader Website Change Detector</span>
+            <span>Firecrawl Real-Time Web Extractor</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
             Automated DOM snapshot comparisons detecting CTA tweaks, promo banners, and policy edits.
@@ -178,7 +178,7 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
               <div>
                 <h4 className="text-xs font-bold text-slate-900 mb-2 flex items-center gap-1.5">
                   <Code className="w-3.5 h-3.5 text-slate-600" />
-                  Playwright DOM Code Diff
+                  Firecrawl HTML Code Diff
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
                   <div className="bg-rose-50/80 p-3.5 rounded-xl border border-rose-200">

@@ -61,7 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   const intelligenceItems = [
-    { id: 'insights' as NavItem, label: 'AI Strategy Engine', icon: Sparkles, badge: 'Gemini' },
+    { id: 'insights' as NavItem, label: 'AI Strategy Engine', icon: Sparkles, badge: 'Apex AI' },
     { id: 'reports' as NavItem, label: 'Executive Reports', icon: FileText },
     { id: 'alerts' as NavItem, label: 'Alerts & Threats', icon: Bell, badgeCount: unreadAlertsCount },
     { id: 'settings' as NavItem, label: 'Settings & Crawlers', icon: Settings },
@@ -136,13 +136,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="text-[11px] font-semibold text-slate-800">Playwright Pipeline</span>
+              <span className="text-[11px] font-semibold text-slate-800">Firecrawl Real-Time Scraper</span>
             </div>
             <Activity className="w-3.5 h-3.5 text-slate-400" />
           </div>
           <div className="text-[10px] text-slate-500 space-y-0.5">
-            <div>Jina Reader Latency: {systemStatus?.jinaReaderLatencyMs ?? 340}ms</div>
-            <div>Proxies Active: {systemStatus?.activeProxies ?? 42} node networks</div>
+            <div>Firecrawl Live API: Active</div>
+            <div>Scraper Proxy Nodes: {systemStatus?.activeProxies ?? 42} active</div>
           </div>
         </div>
       </div>

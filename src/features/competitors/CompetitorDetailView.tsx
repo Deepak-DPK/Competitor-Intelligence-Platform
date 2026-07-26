@@ -163,7 +163,7 @@ export const CompetitorDetailView: React.FC<CompetitorDetailViewProps> = ({
             <div>
               <CardTitle>DOM & Markdown Change History</CardTitle>
               <CardDescription>
-                Playwright + Jina Reader HTML snapshots comparing structural and promotional page updates.
+                Firecrawl real-time HTML snapshots comparing structural and promotional page updates.
               </CardDescription>
             </div>
           </CardHeader>

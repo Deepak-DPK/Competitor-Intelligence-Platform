@@ -40,7 +40,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
     name: '',
     description: '',
     location: '',
-    currency: 'USD',
+    currency: 'INR',
     scanFrequency: 'Daily' as 'Hourly' | 'Daily' | 'Weekly',
     status: 'Active' as 'Active' | 'Paused' | 'Scanning',
   });
@@ -68,7 +68,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
         name: '',
         description: '',
         location: '',
-        currency: 'USD',
+        currency: 'INR',
         scanFrequency: 'Daily',
         status: 'Active',
       });
@@ -228,7 +228,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
             <input
               type="text"
               required
-              placeholder="e.g. Miami, FL, USA"
+              placeholder="e.g. Goa, India"
               value={formData.location}
               onChange={(e) => setFormData({ ...formData, location: e.target.value })}
               className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
@@ -245,6 +245,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                 onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
                 className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
               >
+                <option value="INR">INR (₹)</option>
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
                 <option value="GBP">GBP (£)</option>
@@ -255,7 +256,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Playwright Scan Interval
+                Firecrawl Crawl Schedule
               </label>
               <select
                 value={formData.scanFrequency}
