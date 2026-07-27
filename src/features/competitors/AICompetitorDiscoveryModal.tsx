@@ -82,9 +82,13 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
       if (!pendingSuggestions || pendingSuggestions.length === 0) {
         // Dynamic fallback suggestions based on domain/industry keywords
         await new Promise(resolve => setTimeout(resolve, 1500));
-        const lowerDomain = (domain || profile?.website || '').toLowerCase();
-        const isTravelAgency = lowerDomain.includes('trip') || lowerDomain.includes('booking') || lowerDomain.includes('expedia') || lowerDomain.includes('agoda') || lowerDomain.includes('travel') || lowerDomain.includes('makemytrip') || lowerDomain.includes('goibibo');
-        const isAirline = lowerDomain.includes('air') || lowerDomain.includes('flight') || lowerDomain.includes('indigo') || lowerDomain.includes('vistara');
+        const inputDomain = (website || companyProfile?.website || '').toLowerCase();
+        
+        const isTravelAgency = /trip|booking|expedia|agoda|travel|makemytrip|goibibo|yatra|easemytrip|cleartrip/.test(inputDomain);
+        const isAirline = /air|flight|indigo|vistara|emirates|qatar|boeing/.test(inputDomain);
+        const isFoodDelivery = /zomato|swiggy|uber|doordash|food|restaurant|dine/.test(inputDomain);
+        const isEcommerce = /amazon|flipkart|nike|adidas|puma|zara|myntra|shop|store|retail/.test(inputDomain);
+        const isFintechSaaS = /stripe|razorpay|paypal|adyen|fintech|saas|cloud|pay/.test(inputDomain);
 
         if (isTravelAgency) {
           pendingSuggestions = [
@@ -108,6 +112,13 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
               domain: 'agoda.com',
               reason: 'Key online travel agency competing for price-sensitive Asian travelers with flash sale pricing.',
               confidence_score: 0.91
+            },
+            {
+              id: `sug-${Date.now()}-4`,
+              name: 'EaseMyTrip',
+              domain: 'easemytrip.com',
+              reason: 'Fast-growing travel platform competing with zero-convenience-fee promotions.',
+              confidence_score: 0.89
             }
           ];
         } else if (isAirline) {
@@ -125,6 +136,85 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
               domain: 'airindia.com',
               reason: 'Full-service national carrier competing across domestic metro routes and international sectors.',
               confidence_score: 0.93
+            },
+            {
+              id: `sug-${Date.now()}-3`,
+              name: 'Akasa Air',
+              domain: 'akasaair.com',
+              reason: 'Emerging airline challenging on competitive fare structures and modern fleet comfort.',
+              confidence_score: 0.88
+            }
+          ];
+        } else if (isFoodDelivery) {
+          pendingSuggestions = [
+            {
+              id: `sug-${Date.now()}-1`,
+              name: 'Zomato India',
+              domain: 'zomato.com',
+              reason: 'Market leader in food delivery and restaurant discovery with Gold membership loyalty perks.',
+              confidence_score: 0.96
+            },
+            {
+              id: `sug-${Date.now()}-2`,
+              name: 'Swiggy',
+              domain: 'swiggy.com',
+              reason: 'Primary competitor offering rapid delivery, Instamart groceries, and dining discounts.',
+              confidence_score: 0.95
+            },
+            {
+              id: `sug-${Date.now()}-3`,
+              name: 'Blinkit',
+              domain: 'blinkit.com',
+              reason: 'Quick-commerce competitor capturing impulse retail and food orders.',
+              confidence_score: 0.87
+            }
+          ];
+        } else if (isEcommerce) {
+          pendingSuggestions = [
+            {
+              id: `sug-${Date.now()}-1`,
+              name: 'Nike Official Store',
+              domain: 'nike.com',
+              reason: 'Global sportswear leader competing on direct-to-consumer digital loyalty and sneaker releases.',
+              confidence_score: 0.95
+            },
+            {
+              id: `sug-${Date.now()}-2`,
+              name: 'Adidas India',
+              domain: 'adidas.co.in',
+              reason: 'Major apparel and athletic footwear competitor with aggressive seasonal promotional discounts.',
+              confidence_score: 0.94
+            },
+            {
+              id: `sug-${Date.now()}-3`,
+              name: 'Puma India',
+              domain: 'in.puma.com',
+              reason: 'Key sportswear competitor leveraging influencer collaborations and rapid online fulfillment.',
+              confidence_score: 0.91
+            }
+          ];
+        } else if (isFintechSaaS) {
+          pendingSuggestions = [
+            {
+              id: `sug-${Date.now()}-1`,
+              name: 'Stripe Payments',
+              domain: 'stripe.com',
+              reason: 'Global payment processing leader competing on developer experience and checkout conversion.',
+              confidence_score: 0.96
+            },
+            {
+              id: `sug-${Date.now()}-2`,
+              name: 'Razorpay',
+              domain: 'razorpay.com',
+              reason: 'Dominant Indian fintech platform offering full-stack payment gateway and banking solutions.',
+              confidence_score: 0.94
+            },
+            {
+              id: `sug-${Date.now()}-3`,
+              name: 'PayPal',
+              domain: 'paypal.com',
+              reason: 'Global digital wallet and merchant acquiring competitor.',
+              confidence_score: 0.90
             }
           ];
         } else {
@@ -133,22 +223,29 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
               id: `sug-${Date.now()}-1`,
               name: 'The Leela Palaces',
               domain: 'theleela.com',
-              reason: 'Direct luxury segment competitor in the Indian market with similar target audience.',
+              reason: 'Direct luxury segment competitor in the hospitality market with similar target audience.',
               confidence_score: 0.95
             },
             {
               id: `sug-${Date.now()}-2`,
               name: 'ITC Hotels',
               domain: 'itchotels.com',
-              reason: 'Matches premium positioning and offers comparable luxury amenities.',
+              reason: 'Matches premium positioning and offers comparable luxury amenities and dining experiences.',
               confidence_score: 0.88
             },
             {
               id: `sug-${Date.now()}-3`,
-              name: 'Oberoi Hotels',
+              name: 'Oberoi Hotels & Resorts',
               domain: 'oberoihotels.com',
-              reason: 'Key luxury player competing for high-net-worth travelers.',
+              reason: 'Key luxury player competing for high-net-worth travelers and corporate accounts.',
               confidence_score: 0.92
+            },
+            {
+              id: `sug-${Date.now()}-4`,
+              name: 'Marriott Bonvoy',
+              domain: 'marriott.com',
+              reason: 'International hospitality giant competing on global loyalty rewards and brand variety.',
+              confidence_score: 0.91
             }
           ];
         }

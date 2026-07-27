@@ -150,6 +150,42 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
     }
   };
 
+  const handleAutoDetectDomain = () => {
+    if (!formData.domain && !formData.targetUrl) {
+      showToast('error', 'Domain Required', 'Please enter a domain first (e.g., booking.com).');
+      return;
+    }
+    const raw = formData.domain || formData.targetUrl;
+    const cleanDomain = raw.replace(/^https?:\/\//i, '').replace(/^www\./i, '').split('/')[0].toLowerCase();
+    
+    let name = cleanDomain.split('.')[0];
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    if (name === 'Makemytrip') name = 'MakeMyTrip';
+    if (name === 'Easemytrip') name = 'EaseMyTrip';
+    if (name === 'Goindigo' || name === 'Indigo') name = 'IndiGo Airlines';
+    if (name === 'Airindia') name = 'Air India';
+    if (name === 'Tajhotels' || name === 'Taj') name = 'Taj Hotels';
+    if (name === 'Oberoi' || name === 'Oberoihotels') name = 'Oberoi Hotels';
+    if (name === 'Booking') name = 'Booking.com';
+    if (name === 'Agoda') name = 'Agoda';
+
+    let category: any = 'Direct OTA';
+    if (/hotel|resort|taj|oberoi|leela|marriott|hyatt|hilton|itc/.test(cleanDomain)) {
+      category = 'Luxury Resort';
+    } else if (/chain|group|accor|ihg|radisson/.test(cleanDomain)) {
+      category = 'Hotel Chain';
+    }
+
+    setFormData({
+      ...formData,
+      domain: cleanDomain,
+      name: formData.name || name,
+      category,
+      targetUrl: formData.targetUrl || `https://www.${cleanDomain}`,
+    });
+    showToast('success', 'Domain Detected', `Auto-filled details for ${name}`);
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       {/* Header */}
@@ -386,15 +422,29 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Domain *
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-semibold text-slate-700">
+                  Domain *
+                </label>
+                <button
+                  type="button"
+                  onClick={handleAutoDetectDomain}
+                  className="text-[10px] font-medium text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-1.5 py-0.5 rounded transition-colors"
+                >
+                  <Sparkles className="w-3 h-3" /> Auto-Detect
+                </button>
+              </div>
               <input
                 type="text"
                 required
-                placeholder="hyatt.com"
+                placeholder="e.g. booking.com"
                 value={formData.domain}
                 onChange={(e) => setFormData({ ...formData, domain: e.target.value })}
+                onBlur={() => {
+                  if (formData.domain && !formData.name) {
+                    handleAutoDetectDomain();
+                  }
+                }}
                 className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
               />
             </div>
