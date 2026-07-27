@@ -1,12 +1,12 @@
-# CompeteIQ — AI Travel Agency Intelligence Platform
+# CompeteIQ â€” AI Travel Agency Intelligence Platform
 
 CompeteIQ is a full-stack SaaS platform designed for travel agencies, OTAs, and tour operators to monitor competitor pricing, track holiday package deals, analyze website changes, and generate AI-powered executive summaries.
 
 ## System Architecture
 
 This system is divided into two distinct repositories to separate concerns and allow independent scaling:
-- **Frontend (This Repository)**: A responsive single-page application (SPA) built with React 18, Vite, Tailwind CSS, and Recharts.
-- **Backend (Separate Repository)**: A high-performance Python FastAPI service backed by PostgreSQL (asyncpg), Supabase Auth, and integrated with Firecrawl and Google Gemini APIs.
+- **[Frontend (This Repository)](https://github.com/Deepak-DPK/Competitor-Intelligence-Platform)**: A responsive single-page application (SPA) built with React 18, Vite, Tailwind CSS, and Recharts.
+- **[Backend Repository](https://github.com/Deepak-DPK/competitor-intelligence-platform-Backend)**: A high-performance Python FastAPI service backed by PostgreSQL (asyncpg), Supabase Auth, and integrated with Firecrawl and Google Gemini APIs.
 
 ## Core Features
 1. **Travel Workspaces**: Isolate competitive intelligence by market or business unit (e.g., "Global Travel Agency Workspace").
