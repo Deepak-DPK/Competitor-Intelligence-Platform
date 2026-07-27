@@ -32,14 +32,18 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
 }) => {
   const [selectedChangeType, setSelectedChangeType] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedSnapshot, setSelectedSnapshot] = useState<WebsiteSnapshot | null>(snapshots[0] || null);
+  const [selectedSnapshot, setSelectedSnapshot] = useState<WebsiteSnapshot | null>(
+    (Array.isArray(snapshots) && snapshots.length > 0) ? snapshots[0] : null
+  );
 
   const changeTypes = ['All', 'CTA Changed', 'Promo Banner Added', 'Cancellation Policy Edit', 'Price Badge Moved'];
 
-  const filteredSnapshots = snapshots.filter((snap) => {
+  const filteredSnapshots = (Array.isArray(snapshots) ? snapshots : []).filter((snap) => {
+    const compName = snap.competitorName || 'Unknown Competitor';
+    const summary = snap.summary || 'DOM snapshot comparison';
     const matchesSearch =
-      snap.competitorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      snap.summary.toLowerCase().includes(searchQuery.toLowerCase());
+      compName.toLowerCase().includes((searchQuery || '').toLowerCase()) ||
+      summary.toLowerCase().includes((searchQuery || '').toLowerCase());
     const matchesType = selectedChangeType === 'All' || snap.changeType === selectedChangeType;
     return matchesSearch && matchesType;
   });
@@ -112,15 +116,15 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span className={`text-xs font-bold ${isSelected ? 'text-white' : 'text-slate-900'}`}>
-                      {snap.competitorName}
+                      {snap.competitorName || 'Competitor'}
                     </span>
                     <Badge variant={isSelected ? 'outline' : 'purple'} size="sm">
-                      {snap.changeType}
+                      {snap.changeType || 'CTA Changed'}
                     </Badge>
                   </div>
 
                   <p className={`text-xs leading-relaxed line-clamp-2 ${isSelected ? 'text-slate-200' : 'text-slate-600'}`}>
-                    {snap.summary}
+                    {snap.summary || 'DOM snapshot comparison'}
                   </p>
 
                   <div className="flex items-center justify-between text-[10px] mt-3 pt-2 border-t border-slate-200/20">
@@ -146,18 +150,18 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
                 <div>
                   <div className="flex items-center space-x-2">
                     <Badge variant="purple" size="sm">
-                      {selectedSnapshot.changeType}
+                      {selectedSnapshot.changeType || 'CTA Changed'}
                     </Badge>
-                    <span className="text-xs font-bold text-slate-900">{selectedSnapshot.competitorName}</span>
+                    <span className="text-xs font-bold text-slate-900">{selectedSnapshot.competitorName || 'Competitor'}</span>
                   </div>
-                  <h3 className="text-sm font-semibold text-slate-800 mt-1">{selectedSnapshot.pageTitle}</h3>
+                  <h3 className="text-sm font-semibold text-slate-800 mt-1">{selectedSnapshot.pageTitle || 'Website Snapshot'}</h3>
                   <a
-                    href={selectedSnapshot.pageUrl}
+                    href={selectedSnapshot.pageUrl || (selectedSnapshot as any).url || '#'}
                     target="_blank"
                     rel="noreferrer"
                     className="text-[11px] text-indigo-600 hover:underline flex items-center gap-1 mt-0.5"
                   >
-                    <span>{selectedSnapshot.pageUrl}</span>
+                    <span>{selectedSnapshot.pageUrl || (selectedSnapshot as any).url || 'https://example.com'}</span>
                     <ExternalLink className="w-2.5 h-2.5" />
                   </a>
                 </div>
