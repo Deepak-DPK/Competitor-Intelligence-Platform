@@ -35,6 +35,13 @@ async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
   return response.json();
 }
 
+function extractArray(res: any): any[] {
+  if (Array.isArray(res)) return res;
+  if (res && Array.isArray(res.items)) return res.items;
+  if (res && Array.isArray(res.data)) return res.data;
+  return [];
+}
+
 class ApiService {
   // Auth
   async login(credentials: Record<string, string>): Promise<AuthResponse> {
@@ -118,7 +125,8 @@ class ApiService {
 
   // Projects
   async getProjects(): Promise<Project[]> {
-    return fetchWithAuth('/projects');
+    const res = await fetchWithAuth('/projects');
+    return extractArray(res);
   }
 
   async getProjectById(id: string): Promise<Project | undefined> {
@@ -148,7 +156,8 @@ class ApiService {
   // Competitors
   async getCompetitors(projectId?: string): Promise<Competitor[]> {
     const query = projectId ? `?project_id=${projectId}` : '';
-    return fetchWithAuth(`/competitors${query}`);
+    const res = await fetchWithAuth(`/competitors${query}`);
+    return extractArray(res);
   }
 
   async getCompetitorById(id: string): Promise<Competitor | undefined> {
@@ -221,36 +230,43 @@ class ApiService {
   // Monitoring Snapshots
   async getWebsiteSnapshots(competitorId?: string): Promise<WebsiteSnapshot[]> {
     const query = competitorId ? `?competitor_id=${competitorId}` : '';
-    return fetchWithAuth(`/dashboard/snapshots${query}`);
+    const res = await fetchWithAuth(`/dashboard/snapshots${query}`);
+    return extractArray(res);
   }
 
   // Pricing
   async getPricingTrends(): Promise<PricingDataPoint[]> {
-    return fetchWithAuth('/dashboard/pricing/trends');
+    const res = await fetchWithAuth('/dashboard/pricing/trends');
+    return extractArray(res);
   }
 
   async getPricingDisparities(): Promise<PricingDisparity[]> {
-    return fetchWithAuth('/dashboard/pricing/disparities');
+    const res = await fetchWithAuth('/dashboard/pricing/disparities');
+    return extractArray(res);
   }
 
   // Keywords
   async getKeywordRanks(competitorId?: string): Promise<KeywordRank[]> {
     const query = competitorId ? `?competitor_id=${competitorId}` : '';
-    return fetchWithAuth(`/dashboard/keywords${query}`);
+    const res = await fetchWithAuth(`/dashboard/keywords${query}`);
+    return extractArray(res);
   }
 
   // Social & Ads
   async getSocialPosts(): Promise<SocialPost[]> {
-    return fetchWithAuth('/dashboard/social');
+    const res = await fetchWithAuth('/dashboard/social');
+    return extractArray(res);
   }
 
   async getAdCampaigns(): Promise<AdCampaign[]> {
-    return fetchWithAuth('/dashboard/ads');
+    const res = await fetchWithAuth('/dashboard/ads');
+    return extractArray(res);
   }
 
   // AI Insights
   async getAIInsights(projectId: string): Promise<AIInsight[]> {
-    return fetchWithAuth(`/dashboard/insights?project_id=${projectId}`);
+    const res = await fetchWithAuth(`/dashboard/insights?project_id=${projectId}`);
+    return extractArray(res);
   }
 
   async generateAIInsight(projectId: string, promptQuery?: string): Promise<AIInsight> {
@@ -263,7 +279,8 @@ class ApiService {
   // Alerts
   async getAlerts(projectId?: string): Promise<AlertItem[]> {
     const query = projectId ? `?project_id=${projectId}` : '';
-    return fetchWithAuth(`/alerts${query}`);
+    const res = await fetchWithAuth(`/alerts${query}`);
+    return extractArray(res);
   }
 
   async markAlertAsRead(alertId: string): Promise<void> {
@@ -280,7 +297,8 @@ class ApiService {
 
   // Reports
   async getReports(projectId: string): Promise<ReportConfig[]> {
-    return fetchWithAuth(`/reports?project_id=${projectId}`);
+    const res = await fetchWithAuth(`/reports?project_id=${projectId}`);
+    return extractArray(res);
   }
 
   async createReport(data: Omit<ReportConfig, 'id'>): Promise<ReportConfig> {
