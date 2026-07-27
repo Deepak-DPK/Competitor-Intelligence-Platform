@@ -26,6 +26,12 @@ export interface Project {
   scanFrequency: 'Hourly' | 'Daily' | 'Weekly';
   status: 'Active' | 'Paused' | 'Scanning';
   createdAt: string;
+  // Phase 1 Travel Workspace fields (backward-compatible optional)
+  businessType?: string;
+  country?: string;
+  primaryDestinations?: string;
+  monitoringPreferences?: string;
+  workspaceSettings?: string;
 }
 
 export interface Competitor {
@@ -34,7 +40,7 @@ export interface Competitor {
   name: string;
   domain: string;
   targetUrl: string;
-  category: 'Direct OTA' | 'Hotel Chain' | 'Boutique Aggregator' | 'Luxury Resort';
+  category: 'Direct OTA' | 'Hotel Chain' | 'Boutique Aggregator' | 'Luxury Resort' | 'Distribution Channel' | 'Travel Business' | 'Tour Operator' | 'Airline' | 'Travel Agency' | string;
   starRating: number;
   propertyCount: number;
   avgDailyRate: number;
@@ -100,6 +106,31 @@ export interface PricingDisparity {
   channel: 'Direct Site' | 'Booking.com' | 'Expedia' | 'Agoda';
   disparityAmount: number;
   disparityPercentage: number;
+  detectedAt: string;
+}
+
+export interface TravelPackage {
+  id: string;
+  competitorId: string;
+  competitorName: string;
+  packageName: string;
+  destination: string;
+  duration: string;
+  price: number;
+  discount: number;
+  inclusions: string[];
+  bookingUrl: string;
+  lastScannedAt: string;
+}
+
+export interface PackageComparisonItem {
+  id: string;
+  packageName: string;
+  competitorName: string;
+  changeType: 'price_change' | 'discount_change' | 'new_package' | 'removed_package';
+  previousValue: string;
+  currentValue: string;
+  changePercentage?: number;
   detectedAt: string;
 }
 

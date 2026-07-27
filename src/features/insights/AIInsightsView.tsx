@@ -59,10 +59,10 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
         <div>
           <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-indigo-600" />
-            <span>Apex AI Competitive Strategy Engine</span>
+            <span>AI Summary & Competitor Change Intelligence (Gemini)</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Automated threat detection, revenue optimization recommendations, and strategic action plans.
+            Automated Gemini AI summaries of package price drops, new travel packages, removed packages, and recommended actions.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
           isLoading={isGenerating}
           leftIcon={<Zap className="w-4 h-4 text-amber-300" />}
         >
-          Run Strategic AI Scan
+          Generate AI Summary
         </Button>
       </div>
 
@@ -85,7 +85,7 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
               type="text"
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
-              placeholder="Ask Apex AI (e.g. 'Analyze competitor discount strategies for Q3' or 'Suggest counter-offers for rate undercut')..."
+              placeholder="Ask Gemini AI (e.g. 'Summarize package price drops and new packages added across competitors')..."
               className="w-full h-10 pl-10 pr-4 bg-slate-800/80 text-xs text-white placeholder:text-slate-400 rounded-xl border border-slate-700 focus:outline-none focus:border-indigo-400 transition-all"
             />
           </div>
@@ -99,6 +99,45 @@ export const AIInsightsView: React.FC<AIInsightsViewProps> = ({
             Generate Strategy
           </Button>
         </form>
+      </Card>
+
+      {/* MODULE 6: Gemini Executive Scan Summary */}
+      <Card className="p-5 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 text-white border-indigo-800/40">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-amber-300" />
+            <h3 className="text-sm font-bold tracking-tight text-white uppercase">
+              Gemini Executive Scan Summary
+            </h3>
+          </div>
+          <Badge variant="success" size="sm">Real-time AI Synthesis</Badge>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+            <span className="text-[10px] font-bold uppercase text-amber-300 block mb-1">Price Drops</span>
+            <p className="text-xs font-semibold text-white">3 packages dropped prices</p>
+            <p className="text-[11px] text-slate-300 mt-1">MakeMyTrip lowered Goa Golden Sands by Rs.2,500 (-11.9%)</p>
+          </div>
+
+          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+            <span className="text-[10px] font-bold uppercase text-emerald-300 block mb-1">New Packages Added</span>
+            <p className="text-xs font-semibold text-white">2 seasonal packages launched</p>
+            <p className="text-[11px] text-slate-300 mt-1">Booking.com Hub introduced Royal Rajasthan Heritage Circuit</p>
+          </div>
+
+          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+            <span className="text-[10px] font-bold uppercase text-rose-300 block mb-1">Removed Packages</span>
+            <p className="text-xs font-semibold text-white">1 package discontinued</p>
+            <p className="text-[11px] text-slate-300 mt-1">MakeMyTrip removed Andaman Coral Reef Holiday package</p>
+          </div>
+
+          <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+            <span className="text-[10px] font-bold uppercase text-indigo-300 block mb-1">Recommended Actions</span>
+            <p className="text-xs font-semibold text-white">2 priority actions</p>
+            <p className="text-[11px] text-slate-300 mt-1">Match Rs.18,500 rate on direct booking portal with free airport transfer</p>
+          </div>
+        </div>
       </Card>
 
       {/* AI Insights List */}

@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <Building2 className="w-3.5 h-3.5 text-slate-500" />
             <span className="max-w-[140px] sm:max-w-[200px] truncate">
-              {activeProject ? activeProject.name : 'Select Project'}
+              {activeProject ? activeProject.name : 'Select Workspace'}
             </span>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
           </button>
@@ -100,10 +100,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="absolute left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/80 p-1.5 z-20 animate-in fade-in slide-in-from-top-1 duration-150">
                 <div className="px-3 py-2 border-b border-slate-100 mb-1">
                   <div className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
-                    Switch CompSet Workspace
+                    Switch Travel Workspace
                   </div>
                   <div className="text-[10px] text-slate-500 mt-0.5">
-                    Isolates competitors & pricing alerts by hotel property / market.
+                    Isolates competitors & pricing alerts by travel business workspace / market.
                   </div>
                 </div>
                 {(Array.isArray(projects) ? projects : []).map((proj) => {

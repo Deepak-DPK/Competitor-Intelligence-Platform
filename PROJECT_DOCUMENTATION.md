@@ -36,6 +36,43 @@ Organizations (hotels/resorts, OTAs, SaaS platforms, and e-commerce brands) stru
 
 ---
 
+## 1.1 Phase 2 Travel Intelligence MVP Implementation
+The system implements a specialized 7-module Travel Intelligence MVP designed to automate competitor travel agency website monitoring, package extraction, and parity analysis:
+
+* **Module 1 — Competitor Management (`src/features/competitors/CompetitorsView.tsx`)**:
+  - Full CRUD lifecycle for tracking travel agency competitors.
+  - Supports Agency Name, Website URL, Business Type (`OTA`, `Tour Operator`, `Travel Agency`, `Airline`), Primary Destinations, Pricing Tier, and Notes.
+  - Includes an interactive Edit Modal (`handleOpenEdit`, `handleUpdateSubmit`) and persistent backend synchronization.
+* **Module 2 — Website Scan & Firecrawl HTML Diff (`src/features/monitoring/WebsiteMonitoring.tsx`)**:
+  - Automated and manual-trigger competitor website scanning via Firecrawl integration.
+  - Generates visual HTML DOM diffs, change logs, and scan status badges (`Scanning...`, `Active`, `Paused`) with live change feed.
+* **Module 3 — Package Extraction (`src/features/monitoring/PricingMonitoring.tsx`)**:
+  - Real-time catalog extraction of competitor travel packages.
+  - Structured field extraction: **Package Name**, **Destination**, **Duration**, **Price**, **Discount %**, **Inclusions** (tag pills), and direct **Booking URL** links.
+  - Built-in competitor dropdown filter (`All Competitors`, `MakeMyTrip`, `EaseMyTrip`, `Booking.com Hub`).
+* **Module 4 — Package Comparison (`src/features/monitoring/PricingMonitoring.tsx`)**:
+  - Automated scan delta engine comparing Current Scan vs. Previous Scan snapshots.
+  - Highlights **Price Changes** (with % drop/increase), **Discount Changes**, **New Packages Launched**, and **Removed Packages**.
+* **Module 5 — Executive Dashboard (`src/features/dashboard/DashboardView.tsx`)**:
+  - Top banner with instant **Generate AI Report** action and **AI Summary** navigation.
+  - KPI Cards Grid reporting:
+    1. **Total Competitors** (Active tracked travel agencies)
+    2. **Total Packages** (Live extracted packages in active CompSet)
+    3. **Packages Changed Today** (Price & promo diff count)
+    4. **Last Scan Timestamp** (With live scanning status badge)
+* **Module 6 — AI Summary via Gemini (`src/features/insights/AIInsightsView.tsx`)**:
+  - Dedicated **Gemini Executive Scan Summary** synthesis card.
+  - Summarizes **Price Drops**, **New Packages Added**, **Removed Packages**, and **Recommended Actions**.
+  - Interactive Gemini prompt bar (`Ask Gemini AI...`) for custom strategic queries.
+* **Module 7 — Reports & Instant Exporter (`src/features/reports/ReportsView.tsx`)**:
+  - Dedicated **Instant Report Export Engine (PDF / CSV)**.
+  - Supports one-click CSV and printable PDF downloads for:
+    1. **Competitor Price Report**
+    2. **Website Change Report**
+    3. **AI Executive Summary**
+
+---
+
 ## 2. Technology Stack
 
 | Layer | Technology | Version | Purpose in Codebase |

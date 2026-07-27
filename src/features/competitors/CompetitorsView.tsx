@@ -11,6 +11,7 @@ import {
   Megaphone,
   RefreshCw,
   Trash2,
+  Edit2,
   SlidersHorizontal,
   ChevronRight,
   Eye,
@@ -53,6 +54,14 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isAIDiscoveryOpen, setIsAIDiscoveryOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [editingCompetitor, setEditingCompetitor] = useState<Competitor | null>(null);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    domain: '',
+    targetUrl: '',
+    category: 'Direct OTA' as Competitor['category'],
+    threatLevel: 'Medium' as Competitor['threatLevel'],
+  });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -67,7 +76,18 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
     twitter: '',
   });
 
-  const categories = ['All', 'Direct OTA', 'Hotel Chain', 'Boutique Aggregator', 'Luxury Resort'];
+  const categories = [
+    'All',
+    'Direct OTA',
+    'Hotel Chain',
+    'Boutique Aggregator',
+    'Luxury Resort',
+    'Distribution Channel',
+    'Travel Business',
+    'Tour Operator',
+    'Airline',
+    'Travel Agency',
+  ];
 
   const filteredCompetitors = competitors.filter((c) => {
     const matchesSearch =
@@ -139,6 +159,38 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
     }
   };
 
+  const handleOpenEdit = (comp: Competitor) => {
+    setEditingCompetitor(comp);
+    setEditFormData({
+      name: comp.name,
+      domain: comp.domain,
+      targetUrl: comp.targetUrl,
+      category: comp.category,
+      threatLevel: comp.threatLevel,
+    });
+  };
+
+  const handleUpdateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingCompetitor) return;
+    setIsSubmitting(true);
+    try {
+      await onUpdateCompetitor(editingCompetitor.id, {
+        name: editFormData.name,
+        domain: editFormData.domain,
+        targetUrl: editFormData.targetUrl,
+        category: editFormData.category,
+        threatLevel: editFormData.threatLevel,
+      });
+      showToast('success', 'Competitor Updated', `${editFormData.name} has been updated.`);
+      setEditingCompetitor(null);
+    } catch (err) {
+      showToast('error', 'Update Failed', 'Could not update competitor details.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleDelete = async (comp: Competitor) => {
     if (confirm(`Remove competitor ${comp.name} from this project?`)) {
       try {
@@ -196,7 +248,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
             <span>Monitored Competitor Fleet</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Active hotel competitors in <span className="font-semibold text-slate-800">{project.name}</span>.
+            Active travel business competitors in <span className="font-semibold text-slate-800">{project.name}</span>.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -367,6 +419,14 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
 
               <div className="flex items-center space-x-2">
                 <button
+                  onClick={() => handleOpenEdit(comp)}
+                  className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors cursor-pointer"
+                  title="Edit Competitor"
+                >
+                  <Edit2 className="w-3.5 h-3.5" />
+                </button>
+
+                <button
                   onClick={() => handleDelete(comp)}
                   className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                   title="Remove Competitor"
@@ -403,7 +463,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         title="Add Monitored Competitor"
-        description="Specify target hotel or OTA URL for Firecrawl real-time scrapers."
+        description="Specify target travel business or distribution channel URL for Firecrawl real-time scrapers."
       >
         <form onSubmit={handleAddSubmit} className="space-y-4">
           <div>
@@ -464,6 +524,11 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
                 <option value="Hotel Chain">Hotel Chain</option>
                 <option value="Boutique Aggregator">Boutique Aggregator</option>
                 <option value="Luxury Resort">Luxury Resort</option>
+                <option value="Distribution Channel">Distribution Channel</option>
+                <option value="Travel Business">Travel Business</option>
+                <option value="Tour Operator">Tour Operator</option>
+                <option value="Airline">Airline</option>
+                <option value="Travel Agency">Travel Agency</option>
               </select>
             </div>
           </div>
@@ -545,6 +610,99 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
             </Button>
             <Button variant="primary" size="sm" type="submit" isLoading={isSubmitting}>
               Add Competitor
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Edit Competitor Modal */}
+      <Modal
+        isOpen={!!editingCompetitor}
+        onClose={() => setEditingCompetitor(null)}
+        title="Edit Competitor Details"
+        description="Update domain, website target URL, category, or threat level."
+      >
+        <form onSubmit={handleUpdateSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Competitor Name *
+            </label>
+            <input
+              type="text"
+              required
+              value={editFormData.name}
+              onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+              className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Domain *
+              </label>
+              <input
+                type="text"
+                required
+                value={editFormData.domain}
+                onChange={(e) => setEditFormData({ ...editFormData, domain: e.target.value })}
+                className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Target URL *
+              </label>
+              <input
+                type="url"
+                required
+                value={editFormData.targetUrl}
+                onChange={(e) => setEditFormData({ ...editFormData, targetUrl: e.target.value })}
+                className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Category
+              </label>
+              <select
+                value={editFormData.category}
+                onChange={(e) => setEditFormData({ ...editFormData, category: e.target.value as any })}
+                className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
+              >
+                {categories.filter(c => c !== 'All').map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Threat Level
+              </label>
+              <select
+                value={editFormData.threatLevel}
+                onChange={(e) => setEditFormData({ ...editFormData, threatLevel: e.target.value as any })}
+                className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
+              >
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-end space-x-2 pt-3 border-t border-slate-100">
+            <Button variant="ghost" size="sm" type="button" onClick={() => setEditingCompetitor(null)}>
+              Cancel
+            </Button>
+            <Button variant="primary" size="sm" type="submit" isLoading={isSubmitting}>
+              Save Changes
             </Button>
           </div>
         </form>

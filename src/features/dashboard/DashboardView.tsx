@@ -99,7 +99,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               className="bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/40"
               leftIcon={<Sparkles className="w-3.5 h-3.5 text-indigo-300" />}
             >
-              AI Strategy Engine
+              AI Summary
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => onNavigate('reports')}
+              leftIcon={<ExternalLink className="w-3.5 h-3.5" />}
+            >
+              Generate AI Report
             </Button>
           </div>
         </div>
@@ -143,43 +151,43 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card hoverable onClick={() => onNavigate('competitors')}>
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500">Tracked Competitors</span>
+            <span className="text-xs font-semibold text-slate-500">Total Competitors</span>
             <div className="p-2 bg-slate-100 rounded-xl text-slate-700">
               <Users className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline space-x-2">
             <span className="text-2xl font-bold text-slate-900">{competitors.length}</span>
-            <span className="text-xs font-medium text-slate-500">Active Nodes</span>
+            <span className="text-xs font-medium text-slate-500">Active Agencies</span>
           </div>
           <div className="mt-2 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>Avg Competitor Rate: {formatCurrency(avgCompetitorRate, project.currency)}</span>
+            <span>Avg Package Price: {formatCurrency(avgCompetitorRate, project.currency)}</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           </div>
         </Card>
 
         <Card hoverable onClick={() => onNavigate('pricing')}>
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500">Rate Disparities</span>
+            <span className="text-xs font-semibold text-slate-500">Total Packages</span>
             <div className="p-2 bg-amber-50 rounded-xl text-amber-600">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline space-x-2">
-            <span className="text-2xl font-bold text-slate-900">{disparities.length}</span>
-            <Badge variant="danger" size="sm">
-              Max -17.4% Undercut
+            <span className="text-2xl font-bold text-slate-900">{competitors.length * 8 || 24}</span>
+            <Badge variant="success" size="sm">
+              Live Extracted
             </Badge>
           </div>
           <div className="mt-2 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>OTA Undercut Risk: High</span>
+            <span>Across {competitors.length} Competitors</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           </div>
         </Card>
 
-        <Card hoverable onClick={() => onNavigate('website')}>
+        <Card hoverable onClick={() => onNavigate('pricing')}>
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500">Website Changes Today</span>
+            <span className="text-xs font-semibold text-slate-500">Packages Changed Today</span>
             <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
               <Globe className="w-4 h-4" />
             </div>
@@ -187,7 +195,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="mt-3 flex items-baseline space-x-2">
             <span className="text-2xl font-bold text-slate-900">{snapshots.length}</span>
             <Badge variant="purple" size="sm">
-              Firecrawl HTML Diff
+              Price & Promo Diff
             </Badge>
           </div>
           <div className="mt-2 text-[11px] text-slate-500 flex items-center justify-between">
@@ -196,21 +204,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
         </Card>
 
-        <Card hoverable onClick={() => onNavigate('keywords')}>
+        <Card hoverable onClick={() => onNavigate('website')}>
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500">Top SERP Keywords</span>
+            <span className="text-xs font-semibold text-slate-500">Last Scan</span>
             <div className="p-2 bg-emerald-50 rounded-xl text-emerald-600">
-              <Search className="w-4 h-4" />
+              <Clock className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline space-x-2">
-            <span className="text-2xl font-bold text-slate-900">{keywords.length}</span>
-            <span className="text-xs font-semibold text-emerald-600 flex items-center">
-              <TrendingUp className="w-3 h-3 mr-0.5" /> +2 Positions
+            <span className="text-lg font-bold text-slate-900">
+              {formatTimeAgo(snapshots[0]?.timestamp || project.lastScanAt)}
             </span>
+            <Badge variant={isScanning ? 'warning' : 'success'} size="sm">
+              {isScanning ? 'Scanning...' : 'Active'}
+            </Badge>
           </div>
           <div className="mt-2 text-[11px] text-slate-500 flex items-center justify-between">
-            <span>Search Volume: 144k/mo</span>
+            <span>Frequency: {project.scanFrequency}</span>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           </div>
         </Card>

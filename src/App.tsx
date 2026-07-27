@@ -205,14 +205,19 @@ function AppContent() {
     const newProj: Project = {
       id: `proj-${Date.now()}`,
       name: data.name,
-      description: data.description || 'Hotel competitor monitoring campaign.',
+      description: data.description || 'Travel business competitor monitoring campaign.',
       location: data.location,
-      currency: data.currency || 'INR',
+      currency: data.currency || 'USD',
       scanFrequency: data.scanFrequency || 'Daily',
       status: 'Active',
       competitorCount: 0,
       lastScanAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
+      businessType: data.businessType || 'Resort & Hospitality',
+      country: data.country || 'United States',
+      primaryDestinations: data.primaryDestinations,
+      monitoringPreferences: data.monitoringPreferences,
+      workspaceSettings: data.workspaceSettings,
     };
 
     try {

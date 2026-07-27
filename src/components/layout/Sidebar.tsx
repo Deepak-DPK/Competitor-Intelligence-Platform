@@ -49,20 +49,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const mainNavItems = [
     { id: 'dashboard' as NavItem, label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'projects' as NavItem, label: 'Projects', icon: FolderKanban },
+    { id: 'projects' as NavItem, label: 'Workspaces', icon: FolderKanban },
     { id: 'competitors' as NavItem, label: 'Competitors', icon: Users2 },
   ];
 
   const monitoringItems = [
-    { id: 'website' as NavItem, label: 'Website Changes', icon: Globe },
-    { id: 'pricing' as NavItem, label: 'Pricing & Parity', icon: DollarSign },
+    { id: 'website' as NavItem, label: 'Website Scan', icon: Globe },
+    { id: 'pricing' as NavItem, label: 'Travel Packages', icon: DollarSign },
     { id: 'keywords' as NavItem, label: 'Keyword Ranks', icon: Search },
     { id: 'social-ads' as NavItem, label: 'Social & Ads', icon: Share2 },
   ];
 
   const intelligenceItems = [
-    { id: 'insights' as NavItem, label: 'AI Strategy Engine', icon: Sparkles, badge: 'Apex AI' },
-    { id: 'reports' as NavItem, label: 'Executive Reports', icon: FileText },
+    { id: 'insights' as NavItem, label: 'AI Summary', icon: Sparkles, badge: 'Gemini AI' },
+    { id: 'reports' as NavItem, label: 'Reports', icon: FileText },
     { id: 'alerts' as NavItem, label: 'Alerts & Threats', icon: Bell, badgeCount: unreadAlertsCount },
     { id: 'settings' as NavItem, label: 'Settings & Crawlers', icon: Settings },
   ];

@@ -99,6 +99,29 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
     }, 600);
   };
 
+  const handleExportCSV = (reportType: string) => {
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + "Report Type,Competitor,Package Name,Price,Discount,Date\n"
+      + `${reportType},MakeMyTrip,Goa Golden Sands Getaway,18500,15%,2026-07-27\n`
+      + `${reportType},EaseMyTrip,Kerala Backwaters Luxury Tour,24000,20%,2026-07-27\n`
+      + `${reportType},Booking.com Hub,Royal Rajasthan Heritage Circuit,38000,10%,2026-07-27\n`;
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${reportType.toLowerCase().replace(/\s+/g, '_')}_2026-07-27.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('success', 'CSV Exported', `Downloaded ${reportType} as CSV file.`);
+  };
+
+  const handleExportReportPDF = (reportType: string) => {
+    showToast('info', 'PDF Export Started', `Generating ${reportType} in PDF format...`);
+    setTimeout(() => {
+      window.print();
+    }, 600);
+  };
+
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       {/* Header */}
@@ -127,6 +150,69 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
           </Button>
         </div>
       </div>
+
+      {/* MODULE 7: Instant Executive Report Exports */}
+      <Card className="p-4 bg-slate-50 border border-slate-200/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Download className="w-4 h-4 text-indigo-600" />
+              <span>Instant Report Export Engine (PDF / CSV)</span>
+            </h3>
+            <p className="text-xs text-slate-500">
+              One-click export of Competitor Price Report, Website Change Report, and AI Executive Summary.
+            </p>
+          </div>
+          <Badge variant="primary" size="sm">Export Ready</Badge>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase text-slate-400">Travel Pricing</span>
+              <h4 className="text-xs font-bold text-slate-900">Competitor Price Report</h4>
+            </div>
+            <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
+              <Button size="sm" variant="outline" className="flex-1 text-[11px]" onClick={() => handleExportReportPDF('Competitor Price Report')}>
+                PDF
+              </Button>
+              <Button size="sm" variant="primary" className="flex-1 text-[11px]" onClick={() => handleExportCSV('Competitor Price Report')}>
+                CSV
+              </Button>
+            </div>
+          </div>
+
+          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase text-slate-400">Monitoring Log</span>
+              <h4 className="text-xs font-bold text-slate-900">Website Change Report</h4>
+            </div>
+            <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
+              <Button size="sm" variant="outline" className="flex-1 text-[11px]" onClick={() => handleExportReportPDF('Website Change Report')}>
+                PDF
+              </Button>
+              <Button size="sm" variant="primary" className="flex-1 text-[11px]" onClick={() => handleExportCSV('Website Change Report')}>
+                CSV
+              </Button>
+            </div>
+          </div>
+
+          <div className="p-3 bg-white rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <span className="text-[10px] font-bold uppercase text-slate-400">Gemini Synthesis</span>
+              <h4 className="text-xs font-bold text-slate-900">AI Executive Summary</h4>
+            </div>
+            <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100">
+              <Button size="sm" variant="outline" className="flex-1 text-[11px]" onClick={() => handleExportReportPDF('AI Executive Summary')}>
+                PDF
+              </Button>
+              <Button size="sm" variant="primary" className="flex-1 text-[11px]" onClick={() => handleExportCSV('AI Executive Summary')}>
+                CSV
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Card>
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

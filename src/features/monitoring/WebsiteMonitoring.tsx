@@ -55,11 +55,26 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
         <div>
           <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <Globe className="w-5 h-5 text-indigo-600" />
-            <span>Firecrawl Real-Time Web Extractor</span>
+            <span>Website Scan & DOM Extractor</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Automated DOM snapshot comparisons detecting CTA tweaks, promo banners, and policy edits.
+            Automated website crawler comparisons detecting travel package updates, promo banners, and policy edits.
           </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-end">
+            <span className="text-[10px] text-slate-400 font-bold uppercase">Scan Status</span>
+            <Badge variant={isScanning ? 'warning' : 'success'} size="sm">
+              {isScanning ? 'Scanning in progress...' : 'Completed'}
+            </Badge>
+          </div>
+          <div className="h-7 w-px bg-slate-200" />
+          <div className="flex flex-col items-end">
+            <span className="text-[10px] text-slate-400 font-bold uppercase">Last Scan</span>
+            <span className="text-xs font-semibold text-slate-700">
+              {(Array.isArray(snapshots) && snapshots.length > 0) ? formatTimeAgo(snapshots[0].timestamp) : 'No scans yet'}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -96,7 +111,7 @@ export const WebsiteMonitoring: React.FC<WebsiteMonitoringProps> = ({
         <div className="lg:col-span-5 space-y-3">
           <CardHeader>
             <div>
-              <CardTitle>Change Timeline Feed</CardTitle>
+              <CardTitle>Scan History & Change Feed</CardTitle>
               <CardDescription>{filteredSnapshots.length} detected page alterations</CardDescription>
             </div>
           </CardHeader>
