@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Hotel,
+  Target,
   ChevronDown,
   RefreshCw,
   Bell,
@@ -63,15 +63,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Logo */}
         <div className="flex items-center space-x-2.5">
-          <div className="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-xs">
-            <Hotel className="w-5 h-5 text-indigo-400" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 text-white flex items-center justify-center shadow-md">
+            <Target className="w-5 h-5 text-white animate-pulse" />
           </div>
           <div className="hidden sm:block">
-            <h1 className="text-sm font-bold tracking-tight text-slate-900 leading-none">
-              ResortIQ
+            <h1 className="text-base font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-800 bg-clip-text text-transparent leading-none">
+              CompeteIQ
             </h1>
-            <span className="text-[10px] font-semibold text-slate-400 tracking-wider uppercase">
-              Competitor AI
+            <span className="text-[10px] font-bold text-indigo-600 tracking-wider uppercase">
+              Enterprise AI
             </span>
           </div>
         </div>

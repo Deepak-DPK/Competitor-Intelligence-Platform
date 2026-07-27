@@ -439,11 +439,11 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
         <div className="max-w-md w-full space-y-4 text-center">
-          <div className="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mx-auto shadow-md">
-            <span className="font-bold text-lg text-indigo-400">R</span>
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-500 text-white flex items-center justify-center mx-auto shadow-md">
+            <span className="font-extrabold text-lg text-white">C</span>
           </div>
-          <h2 className="text-base font-bold text-slate-900">Initializing ResortIQ Intelligence Platform...</h2>
-          <p className="text-xs text-slate-500">Connecting Firecrawl Scraper Nodes & Apex AI Engines</p>
+          <h2 className="text-base font-bold text-slate-900">Initializing CompeteIQ Enterprise AI Platform...</h2>
+          <p className="text-xs text-slate-500">Connecting Firecrawl Scraper Nodes & Gemini AI Strategy Engines</p>
           <div className="space-y-2 pt-4">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-3/4 mx-auto" />
