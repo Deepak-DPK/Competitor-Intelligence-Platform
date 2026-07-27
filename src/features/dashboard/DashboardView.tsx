@@ -186,8 +186,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
           <div className="mt-3 flex items-baseline space-x-2">
             <span className="text-2xl font-bold text-slate-900">{snapshots.length}</span>
-          <div className="mt-3 flex items-baseline space-x-2">
-            <span className="text-2xl font-bold text-slate-900">{snapshots.length}</span>
             <Badge variant="purple" size="sm">
               Firecrawl HTML Diff
             </Badge>
