@@ -41,7 +41,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
     title: '',
     dateRange: '7d' as ReportConfig['dateRange'],
     schedule: 'Weekly Email' as ReportConfig['schedule'],
-    recipients: 'alex.rivera@grandhotelgroup.com',
+    recipients: 'alex.rivera@globaltravel.com',
     pricing: true,
     seo: true,
     website: true,
@@ -78,7 +78,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
         title: '',
         dateRange: '7d',
         schedule: 'Weekly Email',
-        recipients: 'alex.rivera@grandhotelgroup.com',
+        recipients: 'alex.rivera@globaltravel.com',
         pricing: true,
         seo: true,
         website: true,
@@ -132,7 +132,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
             <span>Executive Reports & Intelligence Digests</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Automated PDF summaries and scheduled weekly email digests for hotel leadership.
+            Automated PDF summaries and scheduled weekly email digests for agency leadership.
           </p>
         </div>
 
@@ -406,7 +406,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
             </label>
             <input
               type="text"
-              placeholder="alex.rivera@grandhotelgroup.com, gm@grandhotelgroup.com"
+              placeholder="alex.rivera@globaltravel.com, ceo@globaltravel.com"
               value={formData.recipients}
               onChange={(e) => setFormData({ ...formData, recipients: e.target.value })}
               className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"

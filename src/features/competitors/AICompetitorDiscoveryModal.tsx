@@ -40,7 +40,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
 
   const handleAnalyze = async () => {
     if (!website) {
-      showToast('error', 'Error', 'Please enter your hotel website URL.');
+      showToast('error', 'Error', 'Please enter your agency website URL.');
       return;
     }
 
@@ -53,7 +53,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
         // Fallback mock profile
         await new Promise(resolve => setTimeout(resolve, 1500));
         profile = {
-          name: website.includes('tajhotels') ? 'Taj Hotels' : 'Hotel Property',
+          name: website.includes('makemytrip') ? 'MakeMyTrip' : 'Travel Agency',
           description: 'A luxury hospitality brand offering premium accommodations and experiences.',
           core_offerings: ['Luxury Rooms', 'Spa', 'Fine Dining'],
           target_audience: 'High-net-worth individuals, business travelers, luxury tourists',
@@ -96,7 +96,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
               id: `sug-${Date.now()}-1`,
               name: 'MakeMyTrip India',
               domain: 'makemytrip.com',
-              reason: 'Dominant Indian OTA competing on hotel room rates, holiday packages, and seasonal discount codes.',
+              reason: 'Dominant OTA competing on holiday packages, flight deals, and seasonal discount codes.',
               confidence_score: 0.96
             },
             {
@@ -228,15 +228,15 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
             },
             {
               id: `sug-${Date.now()}-2`,
-              name: 'ITC Hotels',
-              domain: 'itchotels.com',
+              name: 'Thomas Cook',
+              domain: 'thomascook.in',
               reason: 'Matches premium positioning and offers comparable luxury amenities and dining experiences.',
               confidence_score: 0.88
             },
             {
               id: `sug-${Date.now()}-3`,
-              name: 'Oberoi Hotels & Resorts',
-              domain: 'oberoihotels.com',
+              name: 'Yatra',
+              domain: 'yatra.com',
               reason: 'Key luxury player competing for high-net-worth travelers and corporate accounts.',
               confidence_score: 0.92
             },
@@ -307,7 +307,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
             </div>
             <div>
               <h3 className="text-lg font-semibold text-slate-900">AI Competitor Discovery</h3>
-              <p className="text-xs text-slate-500">Automatically find relevant competitors for your hotel</p>
+              <p className="text-xs text-slate-500">Automatically find relevant competitors for your travel agency</p>
             </div>
           </div>
           <button
@@ -327,7 +327,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
                 <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <Sparkles className="w-6 h-6" />
                 </div>
-                <h4 className="text-xl font-semibold text-slate-800">What is your hotel's website?</h4>
+                <h4 className="text-xl font-semibold text-slate-800">What is your travel agency's website?</h4>
                 <p className="text-sm text-slate-500">
                   Enter your domain and our AI will analyze your market positioning to find your closest direct and indirect competitors.
                 </p>
@@ -340,7 +340,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
                     type="url"
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
-                    placeholder="https://yourhotel.com"
+                    placeholder="https://yourtravelagency.com"
                     className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all shadow-sm"
                   />
                 </div>
@@ -367,12 +367,12 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
               </div>
               <div className="space-y-2">
                 <h4 className="text-lg font-medium text-slate-800">
-                  {step === 'analyzing' ? 'Analyzing your hotel profile...' : 'Discovering market competitors...'}
+                  {step === 'analyzing' ? 'Analyzing your agency profile...' : 'Discovering market competitors...'}
                 </h4>
                 <p className="text-sm text-slate-500 max-w-md mx-auto">
                   {step === 'analyzing' 
                     ? 'Our AI is extracting keywords, category, and market positioning from your website.' 
-                    : 'Searching across web directories, OTAs, and social networks for hotels matching your profile.'}
+                    : 'Searching across web directories, OTAs, and social networks for agencies matching your profile.'}
                 </p>
               </div>
               <div className="w-64 h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -392,7 +392,7 @@ export const AICompetitorDiscoveryModal: React.FC<AICompetitorDiscoveryModalProp
                     <div>
                       <h4 className="text-sm font-semibold text-slate-800">Analyzed Profile</h4>
                       <p className="text-xs text-slate-500">
-                        {companyProfile.industry || 'Hospitality'} • {companyProfile.category || 'Hotel'}
+                        {companyProfile.industry || 'Travel & Tourism'} • {companyProfile.category || 'Travel Agency'}
                       </p>
                     </div>
                   </div>

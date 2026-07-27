@@ -107,10 +107,10 @@ function AppContent() {
       if (currentProjects.length === 0) {
         try {
           const defaultProj = await apiService.createProject({
-            name: 'Taj Exotica Resort & Spa Goa',
+            name: 'Global Travel Agency Workspace',
             description: 'Primary competitive intelligence workspace',
-            location: 'Goa, India',
-            currency: 'INR',
+            location: 'Global / Online',
+            currency: 'USD',
             scanFrequency: 'Daily',
             status: 'Active',
           });
@@ -119,10 +119,10 @@ function AppContent() {
           console.warn('Could not auto-create default project, creating local fallback', err);
           currentProjects = [{
             id: 'fallback-proj-1',
-            name: 'Taj Exotica Resort & Spa Goa',
+            name: 'Global Travel Agency Workspace',
             description: 'Primary competitive intelligence workspace',
-            location: 'Goa, India',
-            currency: 'INR',
+            location: 'Global / Online',
+            currency: 'USD',
             competitorCount: 0,
             lastScanAt: new Date().toISOString(),
             scanFrequency: 'Daily',
@@ -213,8 +213,8 @@ function AppContent() {
       competitorCount: 0,
       lastScanAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
-      businessType: data.businessType || 'Resort & Hospitality',
-      country: data.country || 'United States',
+      businessType: data.businessType || 'Travel Agency & OTA',
+      country: data.country || 'Global',
       primaryDestinations: data.primaryDestinations,
       monitoringPreferences: data.monitoringPreferences,
       workspaceSettings: data.workspaceSettings,
@@ -320,9 +320,9 @@ function AppContent() {
         url: comp.targetUrl,
         changeType: 'Content Change',
         severity: 'Medium',
-        summary: `Firecrawl real-time scan extracted updated room rates and promotional banners for ${comp.name}.`,
-        beforeSnippet: `<div className="rate-box">\n  <span className="price">₹${comp.avgDailyRate}</span>\n</div>`,
-        afterSnippet: `<div className="rate-box promo">\n  <span className="price">₹${Math.round(comp.avgDailyRate * 0.92)}</span>\n  <span className="badge">Monsoon Special Offer</span>\n</div>`,
+        summary: `Firecrawl real-time scan extracted updated package prices and promotional banners for ${comp.name}.`,
+        beforeSnippet: `<div className="rate-box">\n  <span className="price">$${comp.avgDailyRate}</span>\n</div>`,
+        afterSnippet: `<div className="rate-box promo">\n  <span className="price">$${Math.round(comp.avgDailyRate * 0.92)}</span>\n  <span className="badge">Summer Special Offer</span>\n</div>`,
       };
 
       setSnapshots((prev) => [newSnapshot, ...prev]);
@@ -365,12 +365,12 @@ function AppContent() {
         id: `ins-${Date.now()}`,
         projectId: activeProject.id,
         type: 'opportunity',
-        title: promptQuery ? `Custom AI Analysis: ${promptQuery}` : 'Goa Monsoon Pricing & Rate Parity Strategy',
-        summary: 'Firecrawl data indicates Booking.com & Agoda are undercutting direct rates on deluxe suite inventory by 15-18%.',
+        title: promptQuery ? `Custom AI Analysis: ${promptQuery}` : 'Summer Europe Packages & Pricing Strategy',
+        summary: 'Firecrawl data indicates competitors like Thomas Cook are undercutting premium Europe packages by 10-15%.',
         recommendedActions: [
-          'Launch a direct booking incentive (complimentary breakfast + airport transfer) to match OTA rates.',
-          'Issue automated Rate Parity Violation Notice to partner OTA account manager.',
-          'Increase Google Hotel Ads bid multipliers for Goa regional search traffic.',
+          'Launch a direct booking incentive (complimentary airport transfer + travel insurance) to match competitor package rates.',
+          'Optimize dynamic pricing margins for upcoming peak booking windows.',
+          'Increase Google Ads bid multipliers for high-intent European holiday search traffic.',
         ],
         impactScore: 94,
         confidence: 0.96,
@@ -460,10 +460,10 @@ function AppContent() {
 
   const fallbackProject: Project = {
     id: 'default-proj-1',
-    name: 'Taj Exotica Resort & Spa Goa',
+    name: 'Global Travel Agency Workspace',
     description: 'Primary competitive intelligence workspace',
-    location: 'Goa, India',
-    currency: 'INR',
+    location: 'Global / Online',
+    currency: 'USD',
     competitorCount: competitors.length,
     lastScanAt: new Date().toISOString(),
     scanFrequency: 'Daily',

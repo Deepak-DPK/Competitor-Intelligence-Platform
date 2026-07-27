@@ -11,7 +11,7 @@ import {
   Building2,
   SlidersHorizontal,
 } from 'lucide-react';
-import { Project, User, UserRole, AlertItem } from '../../types';
+import { Project, User, UserRole, AlertItem, Competitor } from '../../types';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { cn } from '../../lib/utils';
@@ -20,6 +20,7 @@ export interface NavbarProps {
   user: User;
   projects: Project[];
   activeProject: Project | null;
+  competitors: Competitor[];
   onSelectProject: (project: Project) => void;
   alerts: AlertItem[];
   onOpenAlerts: () => void;
@@ -34,6 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   user,
   projects,
   activeProject,
+  competitors,
   onSelectProject,
   alerts,
   onOpenAlerts,
@@ -125,7 +127,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <div className="truncate pr-2">
                         <div className="truncate">{proj.name}</div>
                         <div className="text-[10px] text-slate-400 font-normal truncate">
-                          {proj.location} • {proj.competitorCount || 0} competitors
+                          {isSelected
+                            ? `${competitors.length} competitors`
+                            : `${proj.competitorCount || 0} competitors`}
                         </div>
                       </div>
                       {isSelected && <Check className="w-4 h-4 text-slate-900 shrink-0" />}

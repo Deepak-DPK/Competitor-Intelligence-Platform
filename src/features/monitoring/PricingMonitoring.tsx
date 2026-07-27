@@ -91,7 +91,7 @@ export const PricingMonitoring: React.FC<PricingMonitoringProps> = ({
       duration: '6 Days / 5 Nights',
       price: 38000,
       discount: 10,
-      inclusions: ['Heritage Palace Hotel', 'Guided Fort Tours', 'Folk Dinner', 'AC SUV'],
+      inclusions: ['Premium Accommodation', 'Guided City Tours', 'Gourmet Dining', 'Luxury Transfers'],
       bookingUrl: 'https://www.booking.com/packages/rajasthan',
       lastScannedAt: new Date().toISOString(),
     },

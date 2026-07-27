@@ -79,7 +79,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
   const categories = [
     'All',
     'Direct OTA',
-    'Hotel Chain',
+    'Travel Agency',
     'Boutique Aggregator',
     'Luxury Resort',
     'Distribution Channel',
@@ -216,16 +216,16 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
     if (name === 'Easemytrip') name = 'EaseMyTrip';
     if (name === 'Goindigo' || name === 'Indigo') name = 'IndiGo Airlines';
     if (name === 'Airindia') name = 'Air India';
-    if (name === 'Tajhotels' || name === 'Taj') name = 'Taj Hotels';
-    if (name === 'Oberoi' || name === 'Oberoihotels') name = 'Oberoi Hotels';
+    if (name === 'Makemytrip' || name === 'Mmt') name = 'MakeMyTrip';
+    if (name === 'Thomascook' || name === 'Thomascookindia') name = 'Thomas Cook';
     if (name === 'Booking') name = 'Booking.com';
     if (name === 'Agoda') name = 'Agoda';
 
     let category: any = 'Direct OTA';
-    if (/hotel|resort|taj|oberoi|leela|marriott|hyatt|hilton|itc/.test(cleanDomain)) {
-      category = 'Luxury Resort';
+    if (/travel|tours|makemytrip|thomascook|expedia|agoda|booking|yatra|cleartrip/.test(cleanDomain)) {
+      category = 'Travel Agency';
     } else if (/chain|group|accor|ihg|radisson/.test(cleanDomain)) {
-      category = 'Hotel Chain';
+      category = 'Tour Operator';
     }
 
     setFormData({
@@ -521,7 +521,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
                 className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
               >
                 <option value="Direct OTA">Direct OTA</option>
-                <option value="Hotel Chain">Hotel Chain</option>
+                <option value="Travel Agency">Travel Agency</option>
                 <option value="Boutique Aggregator">Boutique Aggregator</option>
                 <option value="Luxury Resort">Luxury Resort</option>
                 <option value="Distribution Channel">Distribution Channel</option>
@@ -540,7 +540,7 @@ export const CompetitorsView: React.FC<CompetitorsViewProps> = ({
             <input
               type="url"
               required
-              placeholder="https://www.hyatt.com/en-US/hotel/..."
+              placeholder="https://www.makemytrip.com/..."
               value={formData.targetUrl}
               onChange={(e) => setFormData({ ...formData, targetUrl: e.target.value })}
               className="w-full h-9 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-slate-900"
