@@ -13,7 +13,7 @@
 CompeteIQ is an enterprise-grade real-time competitor intelligence, price parity tracking, search engine ranking (SERP) monitoring, website DOM change detection, and AI-driven strategic recommendation platform.
 
 ### Problem Statement
-Organizations (hotels/resorts, OTAs, SaaS platforms, and e-commerce brands) struggle to monitor competitor pricing disparities across distribution channels, detect promotional banners or policy alterations on competitor websites, track organic SERP keyword shifts, and synthesize raw multi-channel data into actionable executive strategy.
+Organizations (travel agencies/Agencys, OTAs, SaaS platforms, and e-commerce brands) struggle to monitor competitor pricing disparities across distribution channels, detect promotional banners or policy alterations on competitor websites, track organic SERP keyword shifts, and synthesize raw multi-channel data into actionable executive strategy.
 
 ### Current Status
 * **Frontend**: Production-ready Single Page Application (SPA) built with React 18, Vite, TypeScript, and Tailwind CSS. Hosted on Vercel.
@@ -204,7 +204,7 @@ The system implements a specialized 7-module Travel Intelligence MVP designed to
 ### 4.1 Dashboard Page (`src/features/dashboard/DashboardView.tsx`)
 * **Purpose**: Displays real-time executive KPI metrics, rate comparison trend chart, and live alert stream.
 * **Route / View Key**: `currentNav === 'dashboard'`
-* **Components Used**: `<Card>`, `<CardHeader>`, `<CardTitle>`, `<CardDescription>`, `<Badge>`, `<Button>`, `<Sparkline>`, Lucide icons (`TrendingUp`, `Hotel`, `Globe`, `Search`, `Bell`, `ChevronRight`).
+* **Components Used**: `<Card>`, `<CardHeader>`, `<CardTitle>`, `<CardDescription>`, `<Badge>`, `<Button>`, `<Sparkline>`, Lucide icons (`TrendingUp`, `travel agency`, `Globe`, `Search`, `Bell`, `ChevronRight`).
 * **Buttons**:
   - *"Manage Competitors"* button → calls `onNavigate('competitors')`.
   - *"View All Disparities"* button → calls `onNavigate('pricing')`.
@@ -464,7 +464,7 @@ The backend adheres to a layered asynchronous REST architectural pattern:
 3. Backend cleans domain string and performs an HTTP GET request to `https://domain`.
 4. Parses HTML using `BeautifulSoup` to extract `<title>` tag and meta tags.
 5. Derives brand name from title (stripping suffixes like `- Home`, `- Official Site`).
-6. Categorizes domain based on keyword heuristics (`hotel`, `resort`, `software`, `agency`).
+6. Categorizes domain based on keyword heuristics (`travel agency`, `Agency`, `software`, `agency`).
 7. Returns structured metadata JSON to auto-populate the frontend modal form.
 
 ### 12.2 Firecrawl DOM Diff & Promo Banner Intelligence (`app/services/monitoring/scrapers/firecrawl.py`)
@@ -518,7 +518,7 @@ User Navigates to /reports → Exports Formatted PDF / Excel Presentation
 | **Workspace Switcher** | Switch between multi-property CompSet projects | `Navbar.tsx`, `App.tsx` | `api/v1/projects.py` | `GET /projects`, `POST /projects` | `projects` | Production Ready |
 | **Domain Auto-Detect** | Auto-extract brand & category from domain | `CompetitorManager.tsx` | `services/competitor.py` | `POST /competitors/auto-detect` | None | Production Ready |
 | **Website Monitoring** | Firecrawl DOM diffs and promo banner alerts | `WebsiteMonitoring.tsx` | `scrapers/firecrawl.py`, `dashboard.py` | `GET /dashboard/snapshots` | `website_snapshots` | Production Ready |
-| **Rate Parity Inspector** | Compare direct hotel rates vs OTA channels | `PricingMonitoring.tsx` | `scrapers/pricing.py`, `dashboard.py` | `GET /dashboard/pricing` | `pricing_snapshots` | Production Ready |
+| **Rate Parity Inspector** | Compare direct travel agency rates vs OTA channels | `PricingMonitoring.tsx` | `scrapers/pricing.py`, `dashboard.py` | `GET /dashboard/pricing` | `pricing_snapshots` | Production Ready |
 | **SERP Rank Tracking** | Monitor organic keyword rankings & SERP tags | `KeywordMonitoring.tsx` | `scrapers/keywords.py`, `dashboard.py` | `GET /dashboard/keywords` | `keyword_snapshots` | Production Ready |
 | **Ad Campaign Tracker** | Monitor digital ads and engagement scores | `SocialAdsMonitoring.tsx` | `scrapers/advertising.py`, `dashboard.py` | `GET /dashboard/social` | `social_snapshots` | Production Ready |
 | **Gemini Strategy Engine**| AI-generated prioritized strategic actions | `StrategyInsights.tsx` | `services/ai/gemini.py`, `dashboard.py` | `GET /dashboard/strategy` | Multiple | Production Ready |
@@ -638,3 +638,4 @@ User Navigates to /reports → Exports Formatted PDF / Excel Presentation
 
 ---
 *Documentation generated from source code verification on 2026-07-27.*
+
